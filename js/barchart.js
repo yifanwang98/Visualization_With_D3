@@ -78,8 +78,10 @@ function histogramLinear(key = "Id") {
   // get the data
   d3.csv("data/train.csv", function(data) {
     // X axis: scale and draw:
+    var domainMax = d3.max(data, function(d) { return +d[key] });
+    var domainMin = d3.min(data, function(d) { return +d[key] })
     var x = d3.scaleLinear()
-        .domain([d3.min(data, function(d) { return +d[key] }), d3.max(data, function(d) { return +d[key] })])     // can use this instead of 1000 to have the max of data: d3.max(data, function(d) { return +d.price })
+        .domain([domainMin, domainMax])
         .range([0, width]).nice();
 
     svg.append("g")
@@ -93,17 +95,42 @@ function histogramLinear(key = "Id") {
     // A function that builds the graph for a specific value of bin
     function update(nBin) {
 
+      // Try to do bins by hand
+      var actualBins = [];
+      var step = (domainMax - domainMin) / (nBin);
+      var i = domainMin;
+      while (i < domainMax - step + 1) {
+        actualBins.push(i);
+        i += step;
+      }
+      actualBins.push(domainMax + 1);
+      console.log(actualBins);
+      // i = 0;
+      // var binnedData = [];
+      // while (i < nBin) {
+      //   binnedData.push([]);
+      //   i += 1;
+      // }
+      // // Bins
+      // for (var j = 0; j < data.length; j++) {
+      //   var index = Math.floor(data[j][key] / step) - 1;
+      //   if (index >= nBin) { index = nBin - 1};
+      //   if (index < 0) { index = 0};
+      //   binnedData[index].push(data[j]);
+      // }
+
       // set the parameters for the histogram
       var histogram = d3.histogram()
           .value(function(d) { return +d[key]; })   // I need to give the vector of value
           .domain(x.domain())  // then the domain of the graphic
-          .thresholds(x.ticks(nBin)); // then the numbers of bins
+          .thresholds(actualBins); // then the numbers of bins
 
       // And apply this function to data to get the bins
       var bins = histogram(data);
+      console.log(bins);
 
       // Y axis: update now that we know the domain
-      y.domain([0, d3.max(bins, function(d) { return +d.length; })]);   // d3.hist has to be called before the Y axis obviously
+      y.domain([0, d3.max(bins, function(d) { return +d.length; })]);
       yAxis.transition().duration(1000).call(d3.axisLeft(y));
 
       // Join the rect with the bins data
@@ -151,13 +178,10 @@ function histogramLinear(key = "Id") {
         .merge(u) // get the already existing elements as well
         .transition() // and apply changes to all of them
         .duration(1000)
-          .attr("x", 1)
-          .attr("transform", function(d) { return "translate(" + x(d.x0) + "," + y(d.length) + ")"; })
-          .attr("width", function(d) {
-            var val = x(d.x1) - x(d.x0) - 1;
-            if (val < 0) { return 0; }
-            return x(d.x1) - x(d.x0) - 1 ; })
-          .attr("height", function(d) { return height - y(d.length); })
+          .attr("x", d => x(d.x0) + 1)
+          .attr("width", d => Math.max(0, x(d.x1) - x(d.x0) - 1))
+          .attr("y", d => y(d.length))
+          .attr("height", d => y(0) - y(d.length))
           .style("fill", "#69b3a2")
       // If less bar in the new histogram, I delete the ones not in use anymore
       u.exit().remove()
