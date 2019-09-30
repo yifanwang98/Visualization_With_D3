@@ -36,8 +36,13 @@ function histogram(key=null) {
 
 function histogramLinear(key = "Id") {
   // set the dimensions and margins of the graph
-  var margin = {top: 10, right: 30, bottom: 30, left: 40};
-  var width = 700 - margin.left - margin.right;
+  var w = document.documentElement.clientWidth;
+  console.log("document.documentElement.clientWidth: " + w);
+  var margin = {top: 30, right: 100, bottom: 30, left: 100};
+  if (w < 600) {
+    margin = {top: 30, right: 40, bottom: 30, left: 40};
+  }
+  var width = w - margin.left - margin.right;
   var height = 400 - margin.top - margin.bottom;
 
   // append the svg object to the body of the page
@@ -55,6 +60,7 @@ function histogramLinear(key = "Id") {
     var x = d3.scaleLinear()
         .domain([d3.min(data, function(d) { return +d[key] }), d3.max(data, function(d) { return +d[key] })])     // can use this instead of 1000 to have the max of data: d3.max(data, function(d) { return +d.price })
         .range([0, width]).nice();
+
     svg.append("g")
         .attr("transform", "translate(0," + height + ")")
         .call(d3.axisBottom(x));
@@ -68,7 +74,7 @@ function histogramLinear(key = "Id") {
 
       // set the parameters for the histogram
       var histogram = d3.histogram()
-          .value(function(d) { return d[key]; })   // I need to give the vector of value
+          .value(function(d) { return +d[key]; })   // I need to give the vector of value
           .domain(x.domain())  // then the domain of the graphic
           .thresholds(x.ticks(nBin)); // then the numbers of bins
 
@@ -76,14 +82,13 @@ function histogramLinear(key = "Id") {
       var bins = histogram(data);
 
       // Y axis: update now that we know the domain
-      y.domain([0, d3.max(bins, function(d) { return d.length; })]);   // d3.hist has to be called before the Y axis obviously
+      y.domain([0, d3.max(bins, function(d) { return +d.length; })]);   // d3.hist has to be called before the Y axis obviously
       yAxis.transition().duration(1000).call(d3.axisLeft(y));
 
       // Join the rect with the bins data
       var u = svg.selectAll("rect")
                   .data(bins)
                   .attr("class", "barchart-bar");
-
       // Manage the existing bars and eventually the new ones:
       u.enter()
         .append("rect") // Add a new rect for each new elements
