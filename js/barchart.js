@@ -3,6 +3,15 @@ const DEFAULT_BAR_COLOR = "#69b3a2";
 const HOVERED_BAR_COLOR = "#326f61";
 const DEFAULT_BAR_BIN = 50;
 
+function changeBin(diff) {
+  var newVal = parseInt(document.getElementById('barchart-nBin').value) + parseInt(diff);
+  if (0 < newVal && newVal <= parseInt(document.getElementById('barchart-nBin').max)) {
+    document.getElementById('barchart-nBin').value = newVal;
+    document.getElementById('barchart-nBin').dispatchEvent(new Event('input', { bubbles: true }));
+    document.getElementById('barchart-bin-number').innerHTML = newVal;
+  }
+}
+
 function setUpDropdown() {
   var select = document.getElementById('barchart-attribute');
   var e = document.getElementById('barchart-dropdown');
@@ -36,8 +45,10 @@ function histogram(key=null) {
   var catagorical = ['MSZoning', 'Street', 'Alley', 'LotShape', 'LandContour', 'Utilities', 'LotConfig', 'LandSlope', 'Neighborhood', 'Condition1', 'Condition2', 'BldgType', 'HouseStyle', 'RoofStyle', 'RoofMatl', 'Exterior1st', 'Exterior2nd', 'MasVnrType', 'ExterQual', 'ExterCond', 'Foundation', 'BsmtQual', 'BsmtCond', 'BsmtExposure', 'BsmtFinType1', 'BsmtFinType2', 'Heating', 'HeatingQC', 'CentralAir', 'Electrical', 'KitchenQual', 'Functional', 'FireplaceQu', 'GarageType', 'GarageFinish', 'GarageQual', 'GarageCond', 'PavedDrive', 'PoolQC', 'Fence', 'MiscFeature', 'SaleType', 'SaleCondition'];
   if (catagorical.includes(key)) {
     histogramCatogorical(key);
+    document.getElementById('barchart-bin-info').style.display = 'none'
   } else {
     histogramLinear(key);
+    document.getElementById('barchart-bin-info').style.display = ''
   }
 
   var e = document.getElementById('barchart-title');
@@ -121,12 +132,13 @@ function histogramLinear(key = "Id") {
               var newVal = parseInt(document.getElementById('barchart-nBin').value) - 1;
               if (0 < newVal) {
                 document.getElementById('barchart-nBin').value = newVal;
-                //update(newVal);
+                document.getElementById('barchart-bin-number').innerHTML = newVal;
               }
             } else if (d3.mouse(div.node())[0] > 20.0) {
               var newVal = parseInt(document.getElementById('barchart-nBin').value) + 1;
               if (newVal <= parseInt(document.getElementById('barchart-nBin').max)) {
                 document.getElementById('barchart-nBin').value = newVal;
+                document.getElementById('barchart-bin-number').innerHTML = newVal;
               }
             }
           }
@@ -152,7 +164,7 @@ function histogramLinear(key = "Id") {
     }
 
     // Initialize with 20 bins
-    update(DEFAULT_BAR_BIN)
+    update(parseInt(document.getElementById('barchart-nBin').value))
 
     // Listen to the button -> update if user change it
     d3.select("#barchart-nBin").on("input", function() {
