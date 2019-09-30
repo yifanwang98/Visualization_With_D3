@@ -9,17 +9,28 @@
   <script src="js/events.js"></script>
   <!-- Stylesheet -->
   <link href="css/index.css" type="text/css" rel="stylesheet">
+  <link href="css/barchart.css" type="text/css" rel="stylesheet">
+  <link href="css/dropdown_menu.css" type="text/css" rel="stylesheet">
 </head>
 <body>
 	<h1>CSE 332 Project</h1>
   <div>
-	   <a href="barchart.html">Bar chart</a>
+	   <a href="#barchartSection">Bar chart</a>
   </div>
-  <div>
-    <select id='barchart-attribute' onchange="histogram()"></select>
-    <input type="number" min="1" max="100" step="11" value="34" id="barchart-nBin" style="width: 100px;">
+  <div id='barchartSection'>
+    <select id='barchart-attribute' onchange="histogram()" hidden></select>
+    <div id="barchart-title-container" class="barchart-title-container">
+      <!-- <span id="barchart-title" class="barchart-title">SalePrice</span> -->
+      <div class="dropdown">
+        <span id="barchart-title" class="barchart-title">SalePrice</span>
+        <div id="barchart-dropdown" class="dropdown_container"></div> ▼
+        <span class="barchart-title">bins:
+          <input type="number" min="1" max="100" step="11" value="34" id="barchart-nBin">
+        </span>
+      </div>
+    </div>
+    <div id="barchart" class="chart"></div>
   </div>
-  <div id="barchart" class="chart"></div>
 </body>
 </html>
 

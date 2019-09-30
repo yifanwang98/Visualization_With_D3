@@ -1,0 +1,11 @@
+.barchart-title {
+  font-size: 1.25em;
+  font-family: "Avenir Next", Helvetica, "Times New Roman";
+}
+
+.barchart-title-container {
+  font-size: 1em;
+  font-family: "Avenir Next", Helvetica, "Times New Roman";
+  text-align: center;
+  padding: 0.5em 0;
+}

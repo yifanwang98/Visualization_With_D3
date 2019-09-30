@@ -5,6 +5,7 @@ const DEFAULT_BAR_BIN = 50;
 
 function setUpDropdown() {
   var select = document.getElementById('barchart-attribute');
+  var e = document.getElementById('barchart-dropdown');
   d3.csv("data/train.csv", function(data) {
     var headerNames = d3.keys(data[0]);
     console.log(headerNames);
@@ -15,8 +16,15 @@ function setUpDropdown() {
       } else {
         select.innerHTML += "<option value=\""+ headerNames[i]+ "\">" + headerNames[i] + "</option>"
       }
+      e.innerHTML += "<div class=\"dropdown-content\"><a onclick =\"histogramHelper(this)\">" + headerNames[i] + "</a></div>";
     }
   });
+}
+
+function histogramHelper(e) {
+  var select = document.getElementById('barchart-attribute');
+  select.value = e.innerHTML;
+  histogram(e.innerHTML);
 }
 
 function histogram(key=null) {
@@ -32,6 +40,8 @@ function histogram(key=null) {
     histogramLinear(key);
   }
 
+  var e = document.getElementById('barchart-title');
+  e.innerHTML = key;
 }
 
 function histogramLinear(key = "Id") {
@@ -155,8 +165,13 @@ function histogramLinear(key = "Id") {
 
 function histogramCatogorical(key = "MSZoning") {
   // set the dimensions and margins of the graph
-  var margin = {top: 10, right: 30, bottom: 30, left: 40};
-  var width = 700 - margin.left - margin.right;
+  var w = document.documentElement.clientWidth;
+  console.log("document.documentElement.clientWidth: " + w);
+  var margin = {top: 30, right: 100, bottom: 30, left: 100};
+  if (w < 600) {
+    margin = {top: 30, right: 40, bottom: 30, left: 40};
+  }
+  var width = w - margin.left - margin.right;
   var height = 400 - margin.top - margin.bottom;
 
   // append the svg object to the body of the page
@@ -222,7 +237,12 @@ function histogramCatogorical(key = "MSZoning") {
         .transition() // and apply changes to all of them
         .duration(1000)
           .attr("x", function(d) { return x(d.key); })
-          .attr("width", function(d) {return x.bandwidth() - 1;})
+          .attr("width", function(d) {
+            var w = x.bandwidth() - 2;
+            if (w < 0) {
+              return 0;
+            }
+            return w;})
           .attr("y", function(d) { return y(d.frequency);})
           .attr("height", function(d) { return height - y(d.frequency);})
           .call(d3.axisBottom(x))
