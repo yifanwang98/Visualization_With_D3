@@ -1,0 +1,28 @@
+<!-- Author : Yifan Wang yifanwang@cs.stonybrook.edu -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <!-- Load Script -->
+  <script src="lib/d3.v4.min.js"></script>
+  <script src="js/barchart.js"></script>
+  <!-- Stylesheet -->
+  <link href="css/index.css" type="text/css" rel="stylesheet">
+</head>
+<body>
+	<h1>CSE 332 Project</h1>
+  <div>
+	   <a href="barchart.html">Bar chart</a>
+  </div>
+  <div>
+    <select id='barchart-attribute' onchange="histogram()"></select>
+    <input type="number" min="1" max="100" step="1" value="50" id="barchart-nBin" style="width: 100px;">
+  </div>
+  <div id="barchart" class="chart"></div>
+</body>
+</html>
+
+<script>
+  setUpDropdown();
+  histogram("SalePrice");
+</script>
