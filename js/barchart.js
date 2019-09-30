@@ -99,12 +99,11 @@ function histogramLinear(key = "Id") {
       var actualBins = [];
       var step = (domainMax - domainMin) / (nBin);
       var i = domainMin;
-      while (i < domainMax - step + 1) {
+      while (i < domainMax - step + 0.0001) {
         actualBins.push(i);
         i += step;
       }
       actualBins.push(domainMax + 1);
-      console.log(actualBins);
       // i = 0;
       // var binnedData = [];
       // while (i < nBin) {
@@ -142,19 +141,17 @@ function histogramLinear(key = "Id") {
         .append("rect") // Add a new rect for each new elements
         .on('mouseover', function(d) {
               d3.select(this).style("fill", HOVERED_BAR_COLOR);
-              console.log('over');
           })
         .on('mouseout', function(d) {
             d3.select(this).style("fill", DEFAULT_BAR_COLOR);
-            console.log('out');
         })
         .on("mousedown", function() {
           var div = d3.select(this).classed("active", true);
           var w = d3.select(window).on("mousemove", mousemove).on("mouseup", mouseup);
           d3.event.preventDefault();
-          var original = document.getElementById('barchart-nBin').value
+          var original = document.getElementById('barchart-nBin').value;
           function mousemove() {
-            console.log(d3.mouse(div.node())[0]);
+            console.log(d3.mouse(div.node()));
             if (d3.mouse(div.node())[0] < -20.0) {
               var newVal = parseInt(document.getElementById('barchart-nBin').value) - 1;
               if (0 < newVal) {
@@ -168,6 +165,7 @@ function histogramLinear(key = "Id") {
                 document.getElementById('barchart-bin-number').innerHTML = newVal;
               }
             }
+
           }
           function mouseup() {
             update(document.getElementById('barchart-nBin').value);
@@ -178,10 +176,13 @@ function histogramLinear(key = "Id") {
         .merge(u) // get the already existing elements as well
         .transition() // and apply changes to all of them
         .duration(1000)
-          .attr("x", d => x(d.x0) + 1)
-          .attr("width", d => Math.max(0, x(d.x1) - x(d.x0) - 1))
-          .attr("y", d => y(d.length))
-          .attr("height", d => y(0) - y(d.length))
+          .attr("x", 1)
+          .attr("width", function(d) {
+            var val = x(d.x1) - x(d.x0) - 1;
+            if (val < 0) { return 0; }
+            return x(d.x1) - x(d.x0) - 1 ; })
+          .attr("transform", function(d) { return "translate(" + x(d.x0) + "," + y(d.length) + ")"; })
+          .attr("height", function(d) { return height - y(d.length); })
           .style("fill", "#69b3a2")
       // If less bar in the new histogram, I delete the ones not in use anymore
       u.exit().remove()
