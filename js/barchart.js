@@ -228,7 +228,7 @@ function histogramCatogorical(key = "MSZoning") {
         .domain(data.map(function(d) {
           return d.key;
         }))
-        .range([0, width]);
+        .range([1, width]);
     svg.append("g")
         .attr("transform", "translate(0," + height + ")")
         .call(d3.axisBottom(x));
@@ -236,9 +236,9 @@ function histogramCatogorical(key = "MSZoning") {
     // Y axis: initialization
     var y = d3.scaleLinear()
         .domain([0, d3.max(data, function(d) {
-          return d.frequency;
+          return +d.frequency;
         })])
-        .range([height, 0]);
+        .range([height, 0]).nice();
     var yAxis = svg.append("g");
 
     // A function that builds the graph for a specific value of bin
