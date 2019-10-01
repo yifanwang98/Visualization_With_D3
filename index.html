@@ -12,13 +12,34 @@
   <link href="css/index.css" type="text/css" rel="stylesheet">
   <link href="css/barchart.css" type="text/css" rel="stylesheet">
   <link href="css/dropdown_menu.css" type="text/css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
-	<h1>CSE 332 Project</h1>
-  <div>
-	   <a href="#barchartSection">Bar chart</a>
+	<div style="padding: 1.5em 10%;">
+    <div class="title1">CSE 332 Project</div>
+    <div class="title2">Yifan Wang</div>
   </div>
-  <div id='barchartSection'>
+
+  <!-- Link Section -->
+  <div class="link-section">
+    <div><a href="#datasetSection" class="section-link"><span style="width:40px; display:inline-block;"><i class="fas fa-dice-d6"></i></span>Dataset</a></div>
+    <div><a href="#barchartSection" class="section-link"><span style="width:40px; display:inline-block;"><i class="fa fa-bar-chart"></i></span>Bar chart</a></div>
+  </div><!-- End Of Link Section -->
+  <div id='datasetSection' class="datasetSection">
+    <div style="padding: 1em 10%; text-align: center; font-weight: 500;">
+      <div class="title2"><i class="fas fa-dice-d6"></i> Dataset</div>
+    </div>
+    <div class="datasetSection-content">
+      The dataset selected is The Ames Housing dataset obtained from Kaggle and compiled by Dean De Cock. The dataset is a modernized and expanded version of the often cited Boston Housing dataset.
+      <br/><br/>
+      URL: <a class="datasetSection-url" href="https://www.kaggle.com/c/house-prices-advanced-regression-techniques/data">https://www.kaggle.com/c/house-prices-advanced-regression-techniques/data</a>
+    </div>
+  </div>
+  <!-- Bar Chart Section -->
+  <div id='barchartSection' class="barchartSection">
+    <div style="padding: 1em 10%; text-align: center; font-weight: 500;">
+      <div class="title2"><i class="fa fa-bar-chart"></i> Bar Chart</div>
+    </div>
     <div id="barchart-title-container" class="barchart-title-container">
       <select id='barchart-attribute' onchange="histogram()" hidden></select>
       <span class="barchart-title">Attribute: </span>
@@ -34,7 +55,8 @@
       </span>
     </div>
     <div id="barchart" class="chart"></div>
-  </div>
+  </div><!-- End of Bar Chart Section -->
+
 </body>
 </html>
 

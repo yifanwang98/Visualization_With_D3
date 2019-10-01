@@ -264,22 +264,19 @@ function histogramCatogorical(key = "MSZoning") {
         .append("rect") // Add a new rect for each new elements
         .on('mouseover', function(d) {
               d3.select(this).style("fill", HOVERED_BAR_COLOR);
-              console.log('over');
           })
         .on('mouseout', function(d) {
             d3.select(this).style("fill", DEFAULT_BAR_COLOR);
-            console.log('out');
         })
         .merge(u) // get the already existing elements as well
         .transition() // and apply changes to all of them
         .duration(1000)
           .attr("x", function(d) { return x(d.key); })
           .attr("width", function(d) {
-            var w = x.bandwidth() - 2;
-            if (w < 0) {
-              return 0;
-            }
-            return w;})
+            var w = x.bandwidth() - 1;
+            if (w < 0) { return 0;}
+            return w;
+          })
           .attr("y", function(d) { return y(d.frequency);})
           .attr("height", function(d) { return height - y(d.frequency);})
           .call(d3.axisBottom(x))
