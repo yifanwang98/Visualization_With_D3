@@ -1,4 +1,4 @@
-key,frequency
-Y,1340
-N,90
-P,30
+key,frequency,price
+Y,1340,755000
+N,90,265979
+P,30,215000

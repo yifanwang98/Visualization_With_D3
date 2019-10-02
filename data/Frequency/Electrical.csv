@@ -1,6 +1,6 @@
-key,frequency
-SBrkr,1334
-FuseA,94
-FuseF,27
-FuseP,3
-Mix,1
+key,frequency,price
+SBrkr,1334,755000
+FuseA,94,239000
+FuseF,27,169500
+FuseP,3,137000
+Mix,1,67000

@@ -1,7 +1,7 @@
-key,frequency
-PConc,647
-CBlock,634
-BrkTil,146
-Slab,24
-Stone,6
-Wood,3
+key,frequency,price
+PConc,647,755000
+CBlock,634,402861
+BrkTil,146,475000
+Slab,24,198500
+Stone,6,266500
+Wood,3,250000

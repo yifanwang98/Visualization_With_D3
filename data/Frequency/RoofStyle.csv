@@ -1,7 +1,7 @@
-key,frequency
-Gable,1141
-Hip,286
-Flat,13
-Gambrel,11
-Mansard,7
-Shed,2
+key,frequency,price
+Gable,1141,755000
+Hip,286,745000
+Flat,13,274970
+Gambrel,11,259500
+Mansard,7,265979
+Shed,2,260000

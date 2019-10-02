@@ -1,6 +1,6 @@
-key,frequency
-RL,1151
-RM,218
-FV,65
-RH,16
-C (all),10
+key,frequency,price
+RL,1151,755000
+RM,218,475000
+FV,65,370878
+RH,16,200000
+C (all),10,133900

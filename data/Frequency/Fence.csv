@@ -1,5 +1,5 @@
-key,frequency
-MnPrv,157
-GdPrv,59
-GdWo,54
-MnWw,11
+key,frequency,price
+MnPrv,157,745000
+GdPrv,59,475000
+GdWo,54,381000
+MnWw,11,187000

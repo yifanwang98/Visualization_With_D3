@@ -1,5 +1,5 @@
-key,frequency
-Shed,49
-Gar2,2
-Othr,2
-TenC,1
+key,frequency,price
+Shed,49,277000
+Othr,2,133000
+Gar2,2,190000
+TenC,1,250000

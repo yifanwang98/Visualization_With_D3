@@ -1,5 +1,5 @@
-key,frequency
-Reg,925
-IR1,484
-IR2,41
-IR3,10
+key,frequency,price
+Reg,925,582933
+IR1,484,755000
+IR2,41,538000
+IR3,10,375000

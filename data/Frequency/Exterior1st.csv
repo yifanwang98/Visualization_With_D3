@@ -1,16 +1,16 @@
-key,frequency
-VinylSd,515
-HdBoard,222
-MetalSd,220
-Wd Sdng,206
-Plywood,108
-CemntBd,61
-BrkFace,50
-WdShing,26
-Stucco,25
-AsbShng,20
-BrkComm,2
-Stone,2
-AsphShn,1
-CBlock,1
-ImStucc,1
+key,frequency,price
+VinylSd,515,611657
+HdBoard,222,755000
+MetalSd,220,392000
+Wd Sdng,206,745000
+Plywood,108,345000
+CemntBd,61,556581
+BrkFace,50,430000
+WdShing,26,385000
+Stucco,25,381000
+AsbShng,20,165500
+Stone,2,287000
+BrkComm,2,82000
+CBlock,1,105000
+ImStucc,1,262000
+AsphShn,1,100000

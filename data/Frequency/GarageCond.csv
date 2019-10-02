@@ -1,6 +1,6 @@
-key,frequency
-TA,1326
-Fa,35
-Gd,9
-Po,7
-Ex,2
+key,frequency,price
+TA,1326,755000
+Fa,35,220000
+Gd,9,302000
+Po,7,137000
+Ex,2,127500
