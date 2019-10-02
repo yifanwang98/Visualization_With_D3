@@ -245,6 +245,25 @@ function histogramCatogorical(key = "MSZoning", hist=false) {
                 .attr("height", height + margin.top + margin.bottom)
               .append("g")
                 .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+  if (hist) {
+    svg.append("text")
+        .attr("class", "y label")
+        .attr("text-anchor", "end")
+        .attr("font-family", "Avenir")
+        .attr("y", 6)
+        .attr("dy", "-1em")
+        .attr("dx", "1.2em")
+        .text("Frequency");
+  } else {
+    svg.append("text")
+        .attr("class", "y label")
+        .attr("text-anchor", "end")
+        .attr("font-family", "Avenir")
+        .attr("y", 6)
+        .attr("dy", "-1em")
+        .attr("dx", "1.2em")
+        .text("SalePrice");
+  }
 
   // get the data
   if (hist) {
