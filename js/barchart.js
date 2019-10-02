@@ -62,7 +62,7 @@ function histogramLinear(key = "Id", hist=false) {
   console.log("document.documentElement.clientWidth: " + w);
   var margin = {top: 30, right: 100, bottom: 30, left: 100};
   if (w < 600) {
-    margin = {top: 30, right: 40, bottom: 30, left: 40};
+    margin = {top: 30, right: 60, bottom: 30, left: 60};
   }
   var width = w - margin.left - margin.right;
   var height = 400 - margin.top - margin.bottom;
@@ -88,6 +88,26 @@ function histogramLinear(key = "Id", hist=false) {
     svg.append("g")
         .attr("transform", "translate(0," + height + ")")
         .call(d3.axisBottom(x));
+    if (hist) {
+      svg.append("text")
+          .attr("class", "y label")
+          .attr("text-anchor", "end")
+          .attr("font-family", "Avenir")
+          .attr("y", 6)
+          .attr("dy", "-1em")
+          .attr("dx", "1.2em")
+          .text("Frequency");
+    } else {
+      svg.append("text")
+          .attr("class", "y label")
+          .attr("text-anchor", "end")
+          .attr("font-family", "Avenir")
+          .attr("y", 6)
+          .attr("dy", "-1em")
+          .attr("dx", "1.2em")
+          .text("SalePrice");
+    }
+
 
     // Y axis: initialization
     var y = d3.scaleLinear().range([height, 0]).nice();
@@ -189,7 +209,7 @@ function histogramLinear(key = "Id", hist=false) {
             }
             return 0;
           })
-          .style("fill", "#69b3a2")
+          .style("fill", "#69b3a2");
       // If less bar in the new histogram, I delete the ones not in use anymore
       u.exit().remove()
     }
