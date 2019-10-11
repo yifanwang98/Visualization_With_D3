@@ -7,11 +7,13 @@
   <!-- Load Script -->
   <script src="lib/d3.v4.min.js"></script>
   <script src="js/barchart.js"></script>
+  <script src="js/scatter.js"></script>
   <script src="js/events.js"></script>
   <script src="https://kit.fontawesome.com/a076d05399.js"></script>
   <!-- Stylesheet -->
   <link href="css/index.css" type="text/css" rel="stylesheet">
   <link href="css/barchart.css" type="text/css" rel="stylesheet">
+  <link href="css/scatter.css" type="text/css" rel="stylesheet">
   <link href="css/dropdown_menu.css" type="text/css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
@@ -23,8 +25,15 @@
 
   <!-- Link Section -->
   <div class="link-section">
-    <div><a href="#datasetSection" class="section-link"><span style="width:40px; display:inline-block;"><i class="fas fa-dice-d6"></i></span>Dataset</a></div>
-    <div><a href="#barchartSection" class="section-link"><span style="width:40px; display:inline-block;"><i class="fa fa-bar-chart"></i></span>Bar chart</a></div>
+    <div><a href="#datasetSection" class="section-link">
+      <span style="width:40px; display:inline-block;"><i class="fas fa-dice-d6"></i></span>Dataset</a>
+    </div>
+    <div><a href="#barchartSection" class="section-link">
+      <span style="width:40px; display:inline-block;"><i class="fa fa-bar-chart"></i></span>Bar Chart</a>
+    </div>
+    <div><a href="#scatterPlotSection" class="section-link">
+      <span style="width:40px; display:inline-block;"><i class="fas fa-ellipsis-h"></i></span>Bivariant Scatter Plot</a>
+    </div>
   </div><!-- End Of Link Section -->
   <div id='datasetSection' class="datasetSection">
     <div style="padding: 1em 10%; text-align: center; font-weight: 500;">
@@ -61,10 +70,37 @@
     <div id="barchart" class="chart"></div>
   </div><!-- End of Bar Chart Section -->
 
+  <!-- Scatter Plot Section -->
+  <div id='scatterPlotSection' class="scatterPlotSection">
+    <div style="padding: 1em 10%; text-align: center; font-weight: 500;">
+      <div class="title2"><i class="fas fa-ellipsis-h"></i> Bivariant Scatter Plot of Selected Vaiables</div>
+    </div>
+    <div id="barchart-title-container" class="barchart-title-container">
+      <select id='scatter-attribute-1' onchange="" hidden></select>
+      <select id='scatter-attribute-2' onchange="" hidden></select>
+      <span style="white-space: nowrap;">
+        <span class="barchart-title">Variable 1: </span>
+        <div class="dropdown" style="cursor: pointer;">
+          <span id="barchart-title" class="barchart-title" style="font-style: oblique;">LotArea</span>
+          <div id="scatter-dropdown-1" class="dropdown_container"></div> ▼
+        </div>
+      </span>
+      <span style="margin-left: 100px; white-space: nowrap;">
+        <span class="barchart-title">Variable 2: </span>
+        <div class="dropdown" style="cursor: pointer;">
+          <span id="barchart-title" class="barchart-title" style="font-style: oblique;">SalePrice</span>
+          <div id="scatter-dropdown-2" class="dropdown_container"></div> ▼
+        </div>
+      </span>
+    </div>
+  </div><!-- End of Scatter Plot Section -->
 </body>
 </html>
 
 <script>
+  // Histogram
   setUpDropdown();
   histogram("SalePrice");
+  // Scatter
+  setUpDropdown_scatter();
 </script>
