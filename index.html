@@ -81,18 +81,19 @@
       <span style="white-space: nowrap;">
         <span class="barchart-title">Variable 1: </span>
         <div class="dropdown" style="cursor: pointer;">
-          <span id="barchart-title" class="barchart-title" style="font-style: oblique;">LotArea</span>
+          <span id="scatter-title-1" class="barchart-title" style="font-style: oblique;">LotArea</span>
           <div id="scatter-dropdown-1" class="dropdown_container"></div> ▼
         </div>
       </span>
       <span style="margin-left: 100px; white-space: nowrap;">
         <span class="barchart-title">Variable 2: </span>
         <div class="dropdown" style="cursor: pointer;">
-          <span id="barchart-title" class="barchart-title" style="font-style: oblique;">SalePrice</span>
+          <span id="scatter-title-2" class="barchart-title" style="font-style: oblique;">SalePrice</span>
           <div id="scatter-dropdown-2" class="dropdown_container"></div> ▼
         </div>
       </span>
     </div>
+    <div id="scatterPlot" class="chart" style="text-align: center;"></div>
   </div><!-- End of Scatter Plot Section -->
 </body>
 </html>
@@ -103,4 +104,5 @@
   histogram("SalePrice");
   // Scatter
   setUpDropdown_scatter();
+  plotScatter();
 </script>

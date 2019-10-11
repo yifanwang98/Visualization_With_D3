@@ -1,6 +1,7 @@
 window.onresize = function(event) {
     waitForFinalEvent(function(){
-      histogram(null)
+      histogram(null);
+      plotScatter();
       //...
     }, 500, "some unique string");
 
