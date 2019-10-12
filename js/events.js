@@ -2,6 +2,7 @@ window.onresize = function(event) {
     waitForFinalEvent(function(){
       histogram(null);
       plotScatter();
+      plotHeatmap();
       //...
     }, 500, "some unique string");
 

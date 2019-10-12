@@ -79,7 +79,7 @@ function plotScatter() {
       .attr("text-anchor", "end")
       .attr("font-family", "Avenir")
       .attr("x", 6)
-      .attr("dy", "" + (height + 20) + "px")
+      .attr("dy", "" + (height - 20) + "px")
       .attr("dx", "" + (width) + "px")
       .text(attribute1);
 
@@ -94,7 +94,12 @@ function plotScatter() {
               .nice();
     svg.append("g")
       .attr("transform", "translate(0," + (height - 15) + ")")
-      .call(d3.axisBottom(x));
+      .call(d3.axisBottom(x))
+      .selectAll("text")
+        .style("text-anchor", "end")
+        .attr("dx", "-.8em")
+        .attr("dy", ".15em")
+        .attr("transform", "rotate(-45)");;
 
     // Add Y axis
     var y_domainMax = d3.max(data, function(d) { return +d[attribute2] });
