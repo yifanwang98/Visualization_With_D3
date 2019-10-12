@@ -9,11 +9,13 @@
   <script src="js/barchart.js"></script>
   <script src="js/scatter.js"></script>
   <script src="js/events.js"></script>
+  <script src="js/heatmap.js"></script>
   <script src="https://kit.fontawesome.com/a076d05399.js"></script>
   <!-- Stylesheet -->
   <link href="css/index.css" type="text/css" rel="stylesheet">
   <link href="css/barchart.css" type="text/css" rel="stylesheet">
   <link href="css/scatter.css" type="text/css" rel="stylesheet">
+  <link href="css/heatmap.css" type="text/css" rel="stylesheet">
   <link href="css/dropdown_menu.css" type="text/css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
@@ -33,6 +35,9 @@
     </div>
     <div><a href="#scatterPlotSection" class="section-link">
       <span style="width:40px; display:inline-block;"><i class="fas fa-ellipsis-h"></i></span>Bivariant Scatter Plot</a>
+    </div>
+    <div><a href="#heatmapSection" class="section-link">
+      <span style="width:40px; display:inline-block;"><i class="fas fa-shapes"></i></span>Correlation Matrix</a>
     </div>
   </div><!-- End Of Link Section -->
   <div id='datasetSection' class="datasetSection">
@@ -95,6 +100,20 @@
     </div>
     <div id="scatterPlot" class="chart" style="text-align: center;"></div>
   </div><!-- End of Scatter Plot Section -->
+
+  <!-- Correlation Matrix Section -->
+  <div id='heatmapSection' class="heatmapSection">
+    <div style="padding: 1em 10%; text-align: center; font-weight: 500;">
+      <div class="title2" style="color: #eaeaea;">
+        <i class="fas fa-shapes"></i> Correlation Matrix of Selected Vaiables
+      </div>
+    </div>
+  </div><!-- End of Correlation Matrix Section -->
+
+  <!-- Footer Section -->
+  <div class="footerSection">
+    To Be Continued ...
+  </div><!-- End of Footer Section -->
 </body>
 </html>
 

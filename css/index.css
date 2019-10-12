@@ -52,3 +52,13 @@ body {
   text-decoration: none;
   font-style: italic;
 }
+
+/* Footer */
+.footerSection {
+  text-align: center;
+  font-size: 1.25em;
+  font-family: "Avenir Next", Helvetica, "Times New Roman";
+  color: white;
+  background-color: #191919;
+  padding: 1em;
+}
