@@ -46,7 +46,8 @@ function plotHeatmap() {
       .call(d3.axisLeft(y));
 
   // Build color scale
-  var colorRange = ["#253ce7", "#fff", "#f00c00"];
+  //var colorRange = ["#253ce7", "#fff", "#f00c00"];
+  var colorRange = ["#253ce7", "#fff", "#c90000"];
   var myColor = d3.scaleLinear()
                   .range(colorRange)
                   .domain([-1.0, 0, 1.0]);

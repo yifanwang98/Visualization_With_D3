@@ -10,7 +10,7 @@ function setUpDropdown_scatter() {
   var i = 0
   for (; i < SCATTER_ATTRIBUTES.length; i++) {
     var name = SCATTER_ATTRIBUTES[i];
-    if (SCATTER_ATTRIBUTES[i] == 'LotArea') {
+    if (SCATTER_ATTRIBUTES[i] == 'GrLivArea') {
       select.innerHTML += "<option value=\""+ name + "\" selected>" + name + "</option>"
     } else {
       select.innerHTML += "<option value=\""+ name+ "\">" + name + "</option>"

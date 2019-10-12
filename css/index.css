@@ -1,4 +1,11 @@
 
+.titleIcon {
+  width:30px;
+  display:inline-block;
+  text-align: center;
+  margin-right: 0.6em;
+}
+
 .title1 {
   font-size: 2em;
   font-family: "Avenir Next", Helvetica, "Times New Roman";

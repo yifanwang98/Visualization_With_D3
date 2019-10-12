@@ -6,16 +6,18 @@
   <title>Visualization Project</title>
   <!-- Load Script -->
   <script src="lib/d3.v4.min.js"></script>
+  <script src="js/events.js"></script>
   <script src="js/barchart.js"></script>
   <script src="js/scatter.js"></script>
-  <script src="js/events.js"></script>
   <script src="js/heatmap.js"></script>
+  <script src="js/scatterMatrix.js"></script>
   <script src="https://kit.fontawesome.com/a076d05399.js"></script>
   <!-- Stylesheet -->
   <link href="css/index.css" type="text/css" rel="stylesheet">
   <link href="css/barchart.css" type="text/css" rel="stylesheet">
   <link href="css/scatter.css" type="text/css" rel="stylesheet">
   <link href="css/heatmap.css" type="text/css" rel="stylesheet">
+  <link href="css/scatterMatrix.css" type="text/css" rel="stylesheet">
   <link href="css/dropdown_menu.css" type="text/css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
@@ -25,21 +27,32 @@
     <div class="title2">Yifan Wang</div>
   </div>
 
+  <!--######################################################################-->
+  <!--######################################################################-->
+  <!--######################################################################-->
   <!-- Link Section -->
   <div class="link-section">
-    <div><a href="#datasetSection" class="section-link">
-      <span style="width:40px; display:inline-block;"><i class="fas fa-dice-d6"></i></span>Dataset</a>
+    <div style="padding: 0.1em 0;"><a href="#datasetSection" class="section-link">
+      <span class="titleIcon"><i class="fas fa-dice-d6"></i></span>Dataset</a>
     </div>
-    <div><a href="#barchartSection" class="section-link">
-      <span style="width:40px; display:inline-block;"><i class="fa fa-bar-chart"></i></span>Bar Chart</a>
+    <div style="padding: 0.1em 0;"><a href="#barchartSection" class="section-link">
+      <span class="titleIcon"><i class="fa fa-bar-chart"></i></span>Bar Chart</a>
     </div>
-    <div><a href="#scatterPlotSection" class="section-link">
-      <span style="width:40px; display:inline-block;"><i class="fas fa-ellipsis-h"></i></span>Bivariant Scatter Plot</a>
+    <div style="padding: 0.1em 0;"><a href="#scatterPlotSection" class="section-link">
+      <span class="titleIcon"><i class="fas fa-ellipsis-h"></i></span>Bivariant Scatter Plot</a>
     </div>
-    <div><a href="#heatmapSection" class="section-link">
-      <span style="width:40px; display:inline-block;"><i class="fas fa-shapes"></i></span>Correlation Matrix</a>
+    <div style="padding: 0.1em 0;"><a href="#heatmapSection" class="section-link">
+      <span class="titleIcon"><i class="fas fa-shapes"></i></span>Correlation Matrix</a>
+    </div>
+    <div style="padding: 0.1em 0;"><a href="#scatterMatrixSection" class="section-link">
+      <span class="titleIcon"><i class="fas fa-dice-d20"></i></span>Scatterplot Matrix</a>
     </div>
   </div><!-- End Of Link Section -->
+
+  <!--######################################################################-->
+  <!--######################################################################-->
+  <!--######################################################################-->
+  <!-- Dataset Section -->
   <div id='datasetSection' class="datasetSection">
     <div style="padding: 1em 10%; text-align: center; font-weight: 500;">
       <div class="title2"><i class="fas fa-dice-d6"></i> Dataset</div>
@@ -47,9 +60,14 @@
     <div class="datasetSection-content">
       The dataset selected is The Ames Housing dataset obtained from Kaggle and compiled by Dean De Cock. The dataset is a modernized and expanded version of the often cited Boston Housing dataset.
       <br/><br/>
-      URL: <a class="datasetSection-url" href="https://www.kaggle.com/c/house-prices-advanced-regression-techniques/data">https://www.kaggle.com/c/house-prices-advanced-regression-techniques/data</a>
+      URL: <a class="datasetSection-url" target="_blank"
+              href="https://www.kaggle.com/c/house-prices-advanced-regression-techniques/data">https://www.kaggle.com/c/house-prices-advanced-regression-techniques/data</a>
     </div>
-  </div>
+  </div><!-- End Of Dataset Section -->
+
+  <!--######################################################################-->
+  <!--######################################################################-->
+  <!--######################################################################-->
   <!-- Bar Chart Section -->
   <div id='barchartSection' class="barchartSection">
     <div style="padding: 1em 10%; text-align: center; font-weight: 500;">
@@ -75,6 +93,9 @@
     <div id="barchart" class="chart"></div>
   </div><!-- End of Bar Chart Section -->
 
+  <!--######################################################################-->
+  <!--######################################################################-->
+  <!--######################################################################-->
   <!-- Scatter Plot Section -->
   <div id='scatterPlotSection' class="scatterPlotSection">
     <div style="padding: 1em 10%; text-align: center; font-weight: 500;">
@@ -86,7 +107,7 @@
       <span style="white-space: nowrap;">
         <span class="barchart-title">Variable 1: </span>
         <div class="dropdown" style="cursor: pointer;">
-          <span id="scatter-title-1" class="barchart-title" style="font-style: oblique;">LotArea</span>
+          <span id="scatter-title-1" class="barchart-title" style="font-style: oblique;">GrLivArea</span>
           <div id="scatter-dropdown-1" class="dropdown_container"></div> ▼
         </div>
       </span>
@@ -101,6 +122,9 @@
     <div id="scatterPlot" class="chart" style="text-align: center;"></div>
   </div><!-- End of Scatter Plot Section -->
 
+  <!--######################################################################-->
+  <!--######################################################################-->
+  <!--######################################################################-->
   <!-- Correlation Matrix Section -->
   <div id='heatmapSection' class="heatmapSection">
     <div style="padding: 1em 10%; text-align: center; font-weight: 500;">
@@ -109,14 +133,34 @@
       </div>
     </div>
     <div id="heatmap" class="chart" style="text-align: center;"></div>
-    <div id="heatmapLegend" class="chart" style="text-align: center;"></div>
+    <div id="heatmapLegend" class="chart"
+          style="text-align: center; padding-bottom: 1em;"></div>
   </div><!-- End of Correlation Matrix Section -->
 
+  <!--######################################################################-->
+  <!--######################################################################-->
+  <!--######################################################################-->
+  <!-- Scatterplot Matrix Section -->
+  <div id='scatterMatrixSection' class="scatterMatrixSection">
+    <div style="padding: 1em 10%; text-align: center; font-weight: 500;">
+      <div class="title2" style="color: #000;">
+        <i class="fas fa-dice-d20"></i> Scatterplot Matrix of Selected Vaiables
+      </div>
+    </div>
+    <div id="scatterMatrix" class="chart" style="text-align: center;"></div>
+  </div><!-- End of Scatterplot Matrix Section -->
+
+  <!--**********************************************************************-->
+  <!--**********************************************************************-->
+  <!--**********************************************************************-->
   <!-- Footer Section -->
   <div class="footerSection">
     To Be Continued ...
   </div><!-- End of Footer Section -->
 
+  <!--######################################################################-->
+  <!--######################################################################-->
+  <!--######################################################################-->
   <button onclick="topFunction()" id="toTopBTN"></button>
 </body>
 </html>
