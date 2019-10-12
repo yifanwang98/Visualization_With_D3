@@ -3,6 +3,7 @@ window.onresize = function(event) {
       histogram(null);
       plotScatter();
       plotHeatmap();
+      scatterMatrix();
       //...
     }, 500, "some unique string");
 

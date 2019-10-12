@@ -152,7 +152,12 @@
       greatest aggregated correlation strength are GrLivArea, OverallQual,
       TotalBsmtSF, 1stFlrSF, and, SalePrice in ascending order.
     </div>
-    <div id="scatterMatrix" class="chart" style="text-align: center;"></div>
+    <div id='scatterPlotMatrix0' style="text-align: center;"></div>
+    <div id='scatterPlotMatrix1' style="text-align: center;"></div>
+    <div id='scatterPlotMatrix2' style="text-align: center;"></div>
+    <div id='scatterPlotMatrix3' style="text-align: center;"></div>
+    <div id='scatterPlotMatrix4' style="text-align: center;"></div>
+
   </div><!-- End of Scatterplot Matrix Section -->
 
   <!--**********************************************************************-->
@@ -179,4 +184,7 @@
   plotScatter();
   // Heatmap
   plotHeatmap();
+  // Scatter Matrix
+  setUpScatterMatrixHTML();
+  //scatterMatrix();
 </script>
