@@ -1,9 +1,11 @@
 
 const SCATTER_MATRIX_ATTRIBUTES = ['GrLivArea', 'OverallQual', 'TotalBsmtSF', '1stFlrSF', 'SalePrice'];
+const SCATTER_MATRIX_AGG_CORR = [5.047, 5.302, 5.321, 5.341, 5.959];
 
 function setUpScatterMatrixHTML() {
   for (var i = 0; i < SCATTER_MATRIX_ATTRIBUTES.length; i++) {
     var div = document.getElementById('scatterPlotMatrix' + i);
+    div.innerHTML = "<span class=\"scatterMatrixYAxis\">" + SCATTER_MATRIX_ATTRIBUTES[i] + "</span>";
     for (var j = 0; j < SCATTER_MATRIX_ATTRIBUTES.length; j++) {
       div.innerHTML += "<span id=\"scatterMatrixRow" + i + "" + j + "\" class=\"chart\"></span>";
     }
@@ -20,10 +22,16 @@ function scatterMatrix() {
   width = width - margin.left - margin.right;
   height = height - margin.top - margin.bottom;
 
+  var scatterPlotMatrixX = document.getElementById('scatterPlotMatrixX');
+  var scatterPlotMatrixAggCorr = document.getElementById('scatterPlotMatrixAggCorr');
+  scatterPlotMatrixX.innerHTML = "";
+  scatterPlotMatrixAggCorr.innerHTML = "";
   for (var i = 0; i < SCATTER_MATRIX_ATTRIBUTES.length; i++) {
     for (var j = 0; j < SCATTER_MATRIX_ATTRIBUTES.length; j++) {
       scatterMatrixRow(i, j, SCATTER_MATRIX_ATTRIBUTES[i], width, height, margin);
     }
+    scatterPlotMatrixX.innerHTML += "<span class=\"scatterMatrixXAxis\" style=\"width: " + Math.min(120, w) + "px;\">" + SCATTER_MATRIX_ATTRIBUTES[i] + "</span>";
+    scatterPlotMatrixAggCorr.innerHTML += "<span class=\"scatterMatrixXAxis\" style=\"width: " + Math.min(120, w) + "px;\">" + SCATTER_MATRIX_AGG_CORR[i] + "</span>"
   }
 }
 
@@ -38,6 +46,9 @@ function scatterMatrixRow(row, col, attribute, width, height, margin) {
       .attr("transform",
             "translate(" + margin.left + "," + margin.top + ")");
 
+  if (col > row) {
+    return
+  }
   //Read the data
   d3.csv("data/train.csv", function(data) {
     // Add X axis
