@@ -81,7 +81,7 @@ function scatterMatrixRow(row, col, attribute, width, height, margin) {
           .attr("cx", function (d) { return x(d[attribute1]); } )
           .attr("cy", function (d) { return y(d[attribute]); } )
           .attr("r", 1)
-          .style("fill", SCATTER_DOT_COLOUR);
+          .style("fill", "#064C8D");
 
   })
 
