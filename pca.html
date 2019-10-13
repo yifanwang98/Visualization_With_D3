@@ -6,7 +6,7 @@
   <title>Visualization Project</title>
   <!-- Load Script -->
   <script src="lib/d3.v4.min.js"></script>
-  <script src="js/events.js"></script>
+  <!-- <script src="js/events.js"></script> -->
   <script src="js/barchart.js"></script>
   <script src="js/scatter.js"></script>
   <script src="js/heatmap.js"></script>
@@ -59,7 +59,7 @@
     <div style="padding: 0.1em 2.5em;"><a href="#pcaPlotSection" class="section-link">
       <span class="titleIcon"><i class="fas fa-play"></i></span>PCA Plot</a>
     </div>
-    <div style="padding: 0.1em 2.5em;"><a href="#pcaSection" class="section-link">
+    <div style="padding: 0.1em 2.5em;"><a href="#screePlotSection" class="section-link">
       <span class="titleIcon"><i class="fas fa-play"></i></span>Scree Plot</a>
     </div>
     <div style="padding: 0.1em 2.5em;"><a href="#pcaSection" class="section-link">
@@ -86,18 +86,25 @@
     <div style="padding: 1em 10%; text-align: center; font-weight: 500;">
       <div class="title2" style="color: #EAEAEA;"><i class="fas fa-play"></i> Scree Plot</div>
     </div>
-    <div id="pcaPlot" class="chart" style="text-align: center;"></div>
+    <div id="screePlot" class="chart" style="text-align: center;"></div>
   </div><!-- End Of Scree Plot Section -->
+
+  <!--######################################################################-->
+  <!--######################################################################-->
+  <!--######################################################################-->
+  <button onclick="topFunction()" id="toTopBTN"></button>
 </body>
 </html>
 
 <script>
   // pcaPlot
   pcaPlot();
+  screePlot();
 
   window.onresize = function(event) {
       waitForFinalEvent(function(){
         pcaPlot();
+        screePlot();
       }, 500, "some unique string");
 
   };
@@ -114,4 +121,23 @@
       timers[uniqueId] = setTimeout(callback, ms);
     };
   })();
+
+  // When the user scrolls down 20px from the top of the document, show the button
+  window.onscroll = function() {scrollFunction()};
+
+  function scrollFunction() {
+    var mybutton = document.getElementById("toTopBTN");
+    if (document.body.scrollTop > 50 || document.documentElement.scrollTop > 50) {
+      mybutton.style.display = "block";
+    } else {
+      mybutton.style.display = "none";
+    }
+  }
+
+  // When the user clicks on the button, scroll to the top of the document
+  function topFunction() {
+    document.body.scrollTop = 0; // For Safari
+    document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+  }
+
 </script>
