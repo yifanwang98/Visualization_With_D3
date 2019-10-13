@@ -4,6 +4,7 @@ window.onresize = function(event) {
       plotScatter();
       plotHeatmap();
       scatterMatrix();
+      parallelCoordinates();
       //...
     }, 500, "some unique string");
 

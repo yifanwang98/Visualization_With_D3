@@ -1,21 +1,23 @@
 
-const PARALLEL_ATTRIBUTES = ['1stFlrSF', 'TotalBsmtSF', 'SalePrice', 'OverallQual', 'GrLivArea', 'GarageArea', 'YearBuilt', 'MasVnrArea', 'LotFrontage', 'LotArea'];
+const PARALLEL_ATTRIBUTES = ['SalePrice', 'OverallQual', 'GrLivArea', '1stFlrSF', 'TotalBsmtSF', 'GarageArea', 'YearBuilt', 'MasVnrArea', 'LotFrontage', 'LotArea'];
 
 function parallelCoordinates() {
   var w = document.documentElement.clientWidth;
-  var margin = {top:50, right: 50, bottom: 50, left: 50};
+  var margin = {top:50, right: 30, bottom: 50, left: 30};
   if (w < 600) {
-    margin = {top: 50, right: 75, bottom: 50, left: 75};
+    margin = {top: 50, right: 15, bottom: 50, left: 15};
   }
   var width = w - margin.left - margin.right;
   var height = 600 - margin.top - margin.bottom;
 
   // append the svg object to the body of the page
+  d3.select("#parallelCoordinates").selectAll("*").remove();
   var svg = d3.select("#parallelCoordinates")
               .append("svg")
                 .attr("width", width + margin.left + margin.right)
                 .attr("height", height + margin.top + margin.bottom)
               .append("g")
+                .attr("class", "parallelCoordinates")
                 .attr("transform",
                       "translate(" + margin.left + "," + margin.top + ")");
   d3.csv("data/parallelData.csv", function(data) {
@@ -25,7 +27,7 @@ function parallelCoordinates() {
       name = PARALLEL_ATTRIBUTES[i]
       y[name] = d3.scaleLinear()
                   .domain( d3.extent(data, function(d) { return +d[name]; }) )
-                  .range([height, 0])
+                  .range([height, 0]).nice();
     }
 
     // Build the X scale -> it find the best position for each Y axis
@@ -45,7 +47,7 @@ function parallelCoordinates() {
         .enter().append("path")
         .attr("d",  path)
         .style("fill", "none")
-        .style("stroke", "#69b3a2")
+        .style("stroke", "#ffba0c")
         .style("opacity", 0.5)
 
     // Draw the axis:
@@ -60,7 +62,8 @@ function parallelCoordinates() {
         // Add axis title
         .append("text")
           .style("text-anchor", "middle")
-          .attr("y", -9)
+          .attr("y", -10)
+          .attr("x", -10)
           .text(function(d) { return d; })
           .style("fill", "#f2f4f5")
 
