@@ -111,11 +111,13 @@
   // pcaPlot
   pcaPlot();
   screePlot();
+  pcaBiplot();
 
   window.onresize = function(event) {
       waitForFinalEvent(function(){
         pcaPlot();
         screePlot();
+        pcaBiplot();
       }, 500, "some unique string");
 
   };

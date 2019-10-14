@@ -11,6 +11,15 @@
 }
 
 .pcaBiplotSection {
-  background-color: #EAE9D4;
+  background-color: #FFFBF0;
   padding: 1em 0;
+}
+
+.pcaBiplotYAxis line, .pcaBiplotYAxis path {
+  stroke: #f20000;
+}
+
+.pcaBiplotYAxis text {
+  fill: #f20000;
+  font-size: 1.2em;
 }
