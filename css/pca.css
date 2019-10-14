@@ -16,10 +16,10 @@
 }
 
 .pcaBiplotYAxis line, .pcaBiplotYAxis path {
-  stroke: #f20000;
+  stroke: #007572;
 }
 
 .pcaBiplotYAxis text {
-  fill: #f20000;
+  fill: #007572;
   font-size: 1.2em;
 }

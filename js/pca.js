@@ -203,10 +203,10 @@ function pcaBiplot() {
   var w = document.documentElement.clientWidth;
   var margin = {top:50, right: 100, bottom: 75, left: 100};
   if (w < 600) {
-    margin = {top: 30, right: 60, bottom: 50, left: 60};
+    margin = {top: 50, right: 60, bottom: 50, left: 60};
   }
-  var width = Math.min(650, w);
-  var height = 550;
+  var width = Math.min(800, w);
+  var height = 700;
   width = width - margin.left - margin.right;
   height = height - margin.top - margin.bottom;
 
@@ -267,7 +267,7 @@ function pcaBiplot() {
           .attr("cx", function (d) { return x(d[attribute1]); } )
           .attr("cy", function (d) { return y(d[attribute2]); } )
           .attr("r", 1.75)
-          .style("fill", "#3e3e3e");
+          .style("fill", "#c1c1c1");
 
     // Biplot
     d3.csv("data/PCA/pca_components.csv", function(data) {
@@ -296,8 +296,33 @@ function pcaBiplot() {
             .attr("y1", y(0))
             .attr("x2", function (d) { return xx(d[attribute1]); })
             .attr("y2", function (d) { return yy(d[attribute2]); })
-            .attr("stroke-width", 1.5)
-            .attr("stroke", "#f20000");
+            .attr("stroke-width", 1.75)
+            .attr("stroke", "#007572");
+
+      svg.append("g")
+          .selectAll("text")
+          .data(data)
+          .enter()
+            .append("text")
+            .attr("x", function (d) { return xx(d[attribute1]) + 1; })
+            .attr("y", function (d) {
+              if (d["Attribute"] === 'TotalBsmtSF') {
+                return yy(d[attribute2]) + 5;
+              } else if (d["Attribute"] === 'GrLivArea') {
+                return yy(d[attribute2]) - 3;
+              } else if (d["Attribute"] === 'MasVnrArea') {
+                return yy(d[attribute2]) + 4;
+              } else if (d["Attribute"] === 'GarageArea') {
+                return yy(d[attribute2]) + 4;
+              }
+
+              return yy(d[attribute2]) + 1; }
+            )
+            .text(function (d) { return d["Attribute"]; })
+            .attr("font-family", "Avenir")
+            .attr("font-size", "11px")
+            .attr("font-weight", "500")
+            .attr("fill", "#007572");
 
     });
   });
