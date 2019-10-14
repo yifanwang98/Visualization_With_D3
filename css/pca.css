@@ -1,10 +1,16 @@
 
 .pcaPlotSection {
-  background-color: #d4ccca;
+  /* background-color: #d4ccca; */
+  background-color: #eee;
   padding: 1em 0;
 }
 
 .screePlotSection {
-  background-color: #001F36;
+  background-color: #0e2f44;
+  padding: 1em 0;
+}
+
+.pcaBiplotSection {
+  background-color: #EAE9D4;
   padding: 1em 0;
 }

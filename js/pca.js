@@ -1,6 +1,6 @@
 
-const DEFAULT_SCREE_BAR_COLOR = "#e56767";
-const HOVERED_SCREE_BAR_COLOR = "#ff9994";
+const DEFAULT_SCREE_BAR_COLOR = "#44c0db";
+const HOVERED_SCREE_BAR_COLOR = "#3b9eb4";
 
 function pcaPlot() {
   var attribute1 = "Component 1";
