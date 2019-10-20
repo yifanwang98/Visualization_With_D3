@@ -1,0 +1,100 @@
+<!-- Author : Yifan Wang yifanwang@cs.stonybrook.edu -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Visualization Project</title>
+  <!-- Load Script -->
+  <script src="lib/d3.v4.min.js"></script>
+  <script src="js/events.js"></script>
+  <script src="js/barchart.js"></script>
+  <script src="js/scatter.js"></script>
+  <script src="js/heatmap.js"></script>
+  <script src="js/scatterMatrix.js"></script>
+  <script src="js/parallelCoordinates.js"></script>
+  <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+  <!-- Stylesheet -->
+  <link href="css/index.css" type="text/css" rel="stylesheet">
+  <link href="css/barchart.css" type="text/css" rel="stylesheet">
+  <link href="css/scatter.css" type="text/css" rel="stylesheet">
+  <link href="css/heatmap.css" type="text/css" rel="stylesheet">
+  <link href="css/scatterMatrix.css" type="text/css" rel="stylesheet">
+  <link href="css/parallelCoordinates.css" type="text/css" rel="stylesheet">
+  <link href="css/dropdown_menu.css" type="text/css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+	<div style="padding: 1.5em 10%;">
+    <div class="title1">CSE 332 Project</div>
+    <div class="title2">Yifan Wang</div>
+  </div>
+
+  <!--######################################################################-->
+  <!--######################################################################-->
+  <!--######################################################################-->
+  <!-- Link Section -->
+  <div class="link-section">
+    <div style="padding: 0.1em 0;"><a href="../#datasetSection" class="section-link">
+      <span class="titleIcon"><i class="fas fa-dice-d6"></i></span>Dataset</a>
+    </div>
+    <div style="padding: 0.1em 0;"><a href="../#barchartSection" class="section-link">
+      <span class="titleIcon"><i class="fa fa-bar-chart"></i></span>Bar Chart</a>
+    </div>
+    <div style="padding: 0.1em 0;"><a href="../#scatterPlotSection" class="section-link">
+      <span class="titleIcon"><i class="fas fa-ellipsis-h"></i></span>Bivariant Scatter Plot</a>
+    </div>
+    <div style="padding: 0.1em 0;"><a href="../#heatmapSection" class="section-link">
+      <span class="titleIcon"><i class="fas fa-shapes"></i></span>Correlation Matrix</a>
+    </div>
+    <div style="padding: 0.1em 0;"><a href="../#scatterMatrixSection" class="section-link">
+      <span class="titleIcon"><i class="fas fa-dice-d20"></i></span>Scatterplot Matrix</a>
+    </div>
+    <div style="padding: 0.1em 0;"><a href="../#parallelCoordinatesSection" class="section-link">
+      <span class="titleIcon"><i class="fas fa-gem"></i></span>Parallel Coordinates</a>
+    </div>
+    <div style="padding: 0.1em 0;"><a href="pca.html" class="section-link">
+      <span class="titleIcon"><i class="fas fa-balance-scale"></i></span>PCA</a>
+    </div>
+    <div style="padding: 0.1em 0;"><a href="" class="section-link">
+      <span class="titleIcon"><i class="fas fa-map"></i></span>Multidimensional Scaling</a>
+    </div>
+    <div style="padding: 0.1em 2.5em;"><a href="#mdsDataSection" class="section-link">
+      <span class="titleIcon"><i class="fas fa-play"></i></span>MDS on Data</a>
+    </div>
+    <div style="padding: 0.1em 2.5em;"><a href="#" class="section-link">
+      <span class="titleIcon"><i class="fas fa-play"></i></span>MDS on Attributes</a>
+    </div>
+  </div><!-- End Of Link Section -->
+
+  <!--**********************************************************************-->
+  <!--**********************************************************************-->
+  <!--**********************************************************************-->
+  <!-- MDS Data Section -->
+  <div id="mdsDataSection" class="parallelCoordinatesSection">
+    <div style="padding: 1em 10%; text-align: center; font-weight: 500;">
+      <div class="title2" style="color: #f2f4f5;">
+        <i class="fas fa-play"></i> Multidimensional Scaling on Data
+      </div>
+    </div>
+    <div id="mdsData" class="chart"></div>
+  </div><!-- End of MDS Data Section -->
+
+  <!--######################################################################-->
+  <!--######################################################################-->
+  <!--######################################################################-->
+  <!-- MDS Attributes Section -->
+  <div id='mdsAttSection' class="barchartSection">
+    <div style="padding: 1em 10%; text-align: center; font-weight: 500;">
+      <div class="title2">
+        <i class="fas fa-play"></i> Multidimensional Scaling on Attributes
+      </div>
+    </div>
+    <div id="mdsAtt" class="chart"></div>
+  </div><!-- End of MDS Attributes Section -->
+
+  <!--######################################################################-->
+  <!--######################################################################-->
+  <!--######################################################################-->
+  <button onclick="topFunction()" id="toTopBTN"></button>
+</body>
+</html>
