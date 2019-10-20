@@ -77,8 +77,7 @@ function plot_mdsData() {
           .attr("cx", function (d) { return x(d[attribute1]); } )
           .attr("cy", function (d) { return y(d[attribute2]); } )
           .attr("r", 1.75)
-          .style("fill", "#FFDB8D");
-
+          .style("fill", "#eaeaea");
   })
 }
 
@@ -159,8 +158,21 @@ function plot_mdsAttribute() {
         .append("circle")
           .attr("cx", function (d) { return x(d[attribute1]); } )
           .attr("cy", function (d) { return y(d[attribute2]); } )
-          .attr("r", 1.75)
+          .attr("r", 2)
           .style("fill", "#000");
+
+    svg.append("g")
+        .selectAll("text")
+        .data(data)
+        .enter()
+          .append("text")
+          .attr("x", function (d) { return x(d[attribute1]) + 3;})
+          .attr("y", function (d) { return y(d[attribute2]); })
+          .text(function (d) { return d["Attribute"]; })
+          .attr("font-family", "Avenir")
+          .attr("font-size", "12px")
+          .attr("font-weight", "500")
+          .attr("fill", "#007572");
 
   })
 }

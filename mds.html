@@ -57,7 +57,7 @@
     <div style="padding: 0.1em 2.5em;"><a href="#mdsDataSection" class="section-link">
       <span class="titleIcon"><i class="fas fa-play"></i></span>MDS on Data</a>
     </div>
-    <div style="padding: 0.1em 2.5em;"><a href="#" class="section-link">
+    <div style="padding: 0.1em 2.5em;"><a href="#mdsAttSection" class="section-link">
       <span class="titleIcon"><i class="fas fa-play"></i></span>MDS on Attributes</a>
     </div>
   </div><!-- End Of Link Section -->
@@ -102,9 +102,8 @@
 
   window.onresize = function(event) {
       waitForFinalEvent(function(){
-        pcaPlot();
-        screePlot();
-        pcaBiplot();
+        plot_mdsData();
+        plot_mdsAttribute();
       }, 500, "some unique string");
 
   };
