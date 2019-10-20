@@ -1,0 +1,7 @@
+.mdsDataAxis line, .mdsDataAxis path {
+  stroke: #eaeaea;
+}
+
+.mdsDataAxis text {
+  fill: #eaeaea;
+}

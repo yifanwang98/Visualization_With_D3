@@ -7,17 +7,13 @@
   <!-- Load Script -->
   <script src="lib/d3.v4.min.js"></script>
   <script src="js/events.js"></script>
-  <script src="js/barchart.js"></script>
-  <script src="js/scatter.js"></script>
-  <script src="js/heatmap.js"></script>
-  <script src="js/scatterMatrix.js"></script>
-  <script src="js/parallelCoordinates.js"></script>
+  <script src="js/mds.js"></script>
   <script src="https://kit.fontawesome.com/a076d05399.js"></script>
   <!-- Stylesheet -->
   <link href="css/index.css" type="text/css" rel="stylesheet">
   <link href="css/barchart.css" type="text/css" rel="stylesheet">
   <link href="css/scatter.css" type="text/css" rel="stylesheet">
-  <link href="css/heatmap.css" type="text/css" rel="stylesheet">
+  <link href="css/mds.css" type="text/css" rel="stylesheet">
   <link href="css/scatterMatrix.css" type="text/css" rel="stylesheet">
   <link href="css/parallelCoordinates.css" type="text/css" rel="stylesheet">
   <link href="css/dropdown_menu.css" type="text/css" rel="stylesheet">
@@ -70,7 +66,7 @@
   <!--**********************************************************************-->
   <!--**********************************************************************-->
   <!-- MDS Data Section -->
-  <div id="mdsDataSection" class="parallelCoordinatesSection">
+  <div id="mdsDataSection" class="parallelCoordinatesSection" style="text-align: center">
     <div style="padding: 1em 10%; text-align: center; font-weight: 500;">
       <div class="title2" style="color: #f2f4f5;">
         <i class="fas fa-play"></i> Multidimensional Scaling on Data
@@ -83,7 +79,7 @@
   <!--######################################################################-->
   <!--######################################################################-->
   <!-- MDS Attributes Section -->
-  <div id='mdsAttSection' class="barchartSection">
+  <div id='mdsAttSection' class="barchartSection" style="text-align: center">
     <div style="padding: 1em 10%; text-align: center; font-weight: 500;">
       <div class="title2">
         <i class="fas fa-play"></i> Multidimensional Scaling on Attributes
@@ -98,3 +94,50 @@
   <button onclick="topFunction()" id="toTopBTN"></button>
 </body>
 </html>
+
+<script>
+
+  plot_mdsData();
+  plot_mdsAttribute();
+
+  window.onresize = function(event) {
+      waitForFinalEvent(function(){
+        pcaPlot();
+        screePlot();
+        pcaBiplot();
+      }, 500, "some unique string");
+
+  };
+
+  var waitForFinalEvent = (function () {
+    var timers = {};
+    return function (callback, ms, uniqueId) {
+      if (!uniqueId) {
+        uniqueId = "Don't call this twice without a uniqueId";
+      }
+      if (timers[uniqueId]) {
+        clearTimeout (timers[uniqueId]);
+      }
+      timers[uniqueId] = setTimeout(callback, ms);
+    };
+  })();
+
+  // When the user scrolls down 20px from the top of the document, show the button
+  window.onscroll = function() {scrollFunction()};
+
+  function scrollFunction() {
+    var mybutton = document.getElementById("toTopBTN");
+    if (document.body.scrollTop > 50 || document.documentElement.scrollTop > 50) {
+      mybutton.style.display = "block";
+    } else {
+      mybutton.style.display = "none";
+    }
+  }
+
+  // When the user clicks on the button, scroll to the top of the document
+  function topFunction() {
+    document.body.scrollTop = 0; // For Safari
+    document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+  }
+
+</script>
