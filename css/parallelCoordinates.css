@@ -1,0 +1,13 @@
+.parallelCoordinatesSection {
+  background-color: #0e2f44;
+  padding: 1em 0;
+}
+
+.parallelCoordinates line, .parallelCoordinates path {
+  stroke: #f2f4f5;
+}
+
+.parallelCoordinates text{
+  fill: #f2f4f5;
+  font-size: 1.2em;
+}

@@ -1,0 +1,20 @@
+.heatmapSection {
+  background-color: #424242;
+  padding: 1em 0;
+}
+
+.heatmapYAxis line, .heatmapYAxis path, .heatmapXAxis line, .heatmapXAxis path {
+  stroke: #eaeaea;
+}
+
+.heatmapYAxis text, .heatmapXAxis text{
+  fill: #eaeaea;
+  font-size: 1.2em;
+}
+
+.heatmapLegendText {
+  font-size: 0.95em;
+  font-family: "Avenir Next", Helvetica, "Times New Roman";
+  color: #eaeaea;
+  fill: #eaeaea;
+}

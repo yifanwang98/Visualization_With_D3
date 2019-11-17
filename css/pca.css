@@ -1,0 +1,25 @@
+
+.pcaPlotSection {
+  /* background-color: #d4ccca; */
+  background-color: #eee;
+  padding: 1em 0;
+}
+
+.screePlotSection {
+  background-color: #0e2f44;
+  padding: 1em 0;
+}
+
+.pcaBiplotSection {
+  background-color: #fffcf4;
+  padding: 1em 0;
+}
+
+.pcaBiplotYAxis line, .pcaBiplotYAxis path {
+  stroke: #007572;
+}
+
+.pcaBiplotYAxis text {
+  fill: #007572;
+  font-size: 1.2em;
+}
