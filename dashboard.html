@@ -1,0 +1,89 @@
+<!-- Author : Yifan Wang yifanwang@cs.stonybrook.edu -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Visualization Project</title>
+  <!-- Load Script -->
+  <script src="lib/d3.v4.min.js"></script>
+  <script src="js/events.js"></script>
+  <script src="js/barchart.js"></script>
+  <script src="js/scatter.js"></script>
+  <script src="js/dashboard.js"></script>
+  <script src="js/scatterMatrix.js"></script>
+  <script src="js/parallelCoordinates.js"></script>
+  <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+  <!-- Stylesheet -->
+  <link href="css/index.css" type="text/css" rel="stylesheet">
+  <link href="css/barchart.css" type="text/css" rel="stylesheet">
+  <link href="css/scatter.css" type="text/css" rel="stylesheet">
+  <link href="css/heatmap.css" type="text/css" rel="stylesheet">
+  <link href="css/scatterMatrix.css" type="text/css" rel="stylesheet">
+  <link href="css/dashboard.css" type="text/css" rel="stylesheet">
+  <link href="css/dropdown_menu.css" type="text/css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+	<div style="padding: 1.5em 10%; text-align: center;">
+    <div class="title1">CSE 332 Project Dashboard</div>
+  </div>
+
+  <!--######################################################################-->
+  <!--######################################################################-->
+  <!--######################################################################-->
+
+  <!-- Bar Chart Section -->
+  <div id='barchartSection'>
+    <div id="barchart"></div>
+  </div><!-- End of Bar Chart Section -->
+  <!--**********************************************************************-->
+  <!--**********************************************************************-->
+  <!--**********************************************************************-->
+  <!-- Scatter Plot Section -->
+  <div id='scatterPlotSection' style="width: 30%; display: inline-block;">
+    <div id="scatterPlot"></div>
+  </div><!-- End of Scatter Plot Section -->
+
+
+  <!-- Bar Chart Section -->
+  <div id='barchartSection2' style="width: 30%; display: inline-block;">
+    <div id="barchart2"></div>
+  </div><!-- End of Bar Chart Section -->
+
+  <div id='pcaPlotSection' style="width: 30%; display: inline-block;">
+    <div id="pcaPlot"></div>
+  </div><!-- End of Scatter Plot Section -->
+
+
+  <!--**********************************************************************-->
+  <!--**********************************************************************-->
+  <!--**********************************************************************-->
+
+
+  <!--######################################################################-->
+  <!--######################################################################-->
+  <!--######################################################################-->
+  <button onclick="topFunction()" id="toTopBTN"></button>
+</body>
+</html>
+
+<script>
+  // Histogram
+  db_barchart1();
+  db_barchart2();
+  // Scatter
+  db_scatter1();
+  db_scatter2();
+
+  window.onresize = function(event) {
+      waitForFinalEvent(function(){
+        db_barchart1();
+        db_barchart2();
+        db_scatter1();
+        db_scatter2();
+        //...
+      }, 500, "some unique string");
+
+  };
+
+</script>
