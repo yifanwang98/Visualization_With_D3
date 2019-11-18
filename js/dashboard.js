@@ -1,4 +1,41 @@
 const DB_COLOR = '#474f5c';
+const DB_CLUSTER_COLORS = ['#bd24a0', '#ff9b00', '#ce0a0a', '#08c9c2'];
+const DB_NEIGHBORHOOD_COLORS = ['#bbe7d2', '#83b0a6', '#374749', '#3d9674', '#182f2d',
+                                '#3999a1', '#4fc5e7', '#aafff9', '#4f8fbf', '#073749',
+                                '#fa7268', '#eb5757', '#e61e50', '#e01e5a', '#e53974',
+                                '#f2ce76', '#ecbb45', '#bf9d34', '#a97524', '#a15421',
+                                '#004c97', '#ff9e15', '#e61e50', '#4cb04f', '#00bcd4']
+const DB_NEIGHBORHOOD_LIST = ['CollgCr', 'Veenker', 'NoRidge', 'Mitchel', 'Somerst', 'NWAmes',
+                               'BrkSide', 'Sawyer', 'NAmes', 'SawyerW', 'IDOTRR', 'MeadowV',
+                               'NridgHt', 'Timber', 'Gilbert', 'OldTown', 'ClearCr', 'Crawfor',
+                               'Edwards', 'NPkVill', 'StoneBr', 'BrDale', 'Blmngtn', 'SWISU',
+                               'Blueste']
+
+var clusterFilter = 'Agglomerative';
+var barchartSingleColor = true;
+
+function db_clusterFilterChanges() {
+  clusterFilter = 'None';
+  for (var i = 1; i <= 5; i++) {
+    var id = 'clusterFilter' + i;
+    if (document.getElementById(id).checked) {
+      clusterFilter = document.getElementById(id).value;
+    }
+  }
+  db_scatter1();
+  db_scatter2();
+  if (clusterFilter === 'Neighborhood') {
+    db_barchartSingleColorChanges(false);
+  } else {
+    db_barchartSingleColorChanges(true);
+  }
+}
+
+function db_barchartSingleColorChanges(value) {
+  barchartSingleColor = value
+  db_barchart1();
+  db_barchart2();
+}
 
 function db_barchart(width, height, margin, id, filename, xLabel, yLabel, xAttr, yAttr) {
   // append the svg object to the body of the page
@@ -62,10 +99,20 @@ function db_barchart(width, height, margin, id, filename, xLabel, yLabel, xAttr,
       u.enter()
         .append("rect") // Add a new rect for each new elements
         .on('mouseover', function(d) {
-              d3.select(this).style("fill", HOVERED_BAR_COLOR);
+              d3.select(this).style("fill", '#a3a7ad');
           })
         .on('mouseout', function(d) {
+          if (!barchartSingleColor && xLabel === 'Neighborhood') {
+            for (var i = 0; i < DB_NEIGHBORHOOD_LIST.length; i++) {
+              if (d[xAttr] === DB_NEIGHBORHOOD_LIST[i]) {
+                d3.select(this).style("fill", DB_NEIGHBORHOOD_COLORS[i]);
+              }
+            }
+          } else if (xLabel === 'OverallQual' && clusterFilter === 'OverallQual') {
+            d3.select(this).style("fill", DB_NEIGHBORHOOD_COLORS[d[xAttr] - 1]);
+          } else {
             d3.select(this).style("fill", DB_COLOR);
+          }
         })
         .merge(u) // get the already existing elements as well
         .transition() // and apply changes to all of them
@@ -79,7 +126,22 @@ function db_barchart(width, height, margin, id, filename, xLabel, yLabel, xAttr,
           .attr("y", function(d) { return y(d[yAttr]);})
           .attr("height", function(d) { return height - y(d[yAttr]);})
           .call(d3.axisBottom(x))
-          .style("fill", DB_COLOR);
+          .style("fill", function(d) {
+            if (xLabel === 'Neighborhood') {
+              if (!barchartSingleColor) {
+                for (var i = 0; i < DB_NEIGHBORHOOD_LIST.length; i++) {
+                  if (d[xAttr] === DB_NEIGHBORHOOD_LIST[i]) {
+                    return DB_NEIGHBORHOOD_COLORS[i];
+                  }
+                }
+              }
+            } else if (xLabel === 'OverallQual') {
+              if (clusterFilter === 'OverallQual') {
+                return DB_NEIGHBORHOOD_COLORS[d[xAttr] - 1];
+              }
+            }
+            return DB_COLOR;
+          });
       // If less bar in the new histogram, I delete the ones not in use anymore
       u.exit().remove()
     }
@@ -136,9 +198,6 @@ function db_scatter(width, height, margin, id, filename, xLabel, yLabel, attribu
       .call(d3.axisBottom(x))
       .selectAll("text")
         .style("text-anchor", "end");
-        // .attr("dx", "-.8em")
-        // .attr("dy", ".15em");
-        // .attr("transform", "rotate(-45)");;
 
     // Add Y axis
     var y_domainMax = d3.max(data, function(d) { return +d[attribute2] });
@@ -159,7 +218,20 @@ function db_scatter(width, height, margin, id, filename, xLabel, yLabel, attribu
           .attr("cx", function (d) { return x(d[attribute1]); } )
           .attr("cy", function (d) { return y(d[attribute2]); } )
           .attr("r", 1.75)
-          .style("fill", DB_COLOR);
+          .style("fill", function (d) {
+            if (clusterFilter === 'None') {
+              return DB_COLOR;
+            } else if (clusterFilter === 'Neighborhood') {
+              for (var i = 0; i < DB_NEIGHBORHOOD_LIST.length; i++) {
+                if (d['Neighborhood'] === DB_NEIGHBORHOOD_LIST[i]) {
+                  return DB_NEIGHBORHOOD_COLORS[i + 1];
+                }
+              }
+            } else if (clusterFilter === 'OverallQual') {
+              return DB_NEIGHBORHOOD_COLORS[d[clusterFilter] - 1];
+            }
+            return DB_CLUSTER_COLORS[d[clusterFilter]];
+          } );
 
   })
 }

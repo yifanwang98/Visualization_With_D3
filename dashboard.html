@@ -50,6 +50,7 @@
     <div id="barchart2"></div>
   </div><!-- End of Bar Chart Section -->
 
+
   <div id='pcaPlotSection' style="width: 30%; display: inline-block;">
     <div id="pcaPlot"></div>
   </div><!-- End of Scatter Plot Section -->
@@ -59,7 +60,34 @@
   <!--**********************************************************************-->
   <!--**********************************************************************-->
 
-
+  <div class="db_config" style="padding: 1em 5%;">
+    <span style="font-weight: 500;">Color Distinction:</span>
+    <span class="db_config_radio">
+      <input type="radio" id="clusterFilter3" name="clusterFilter"
+              value="Agglomerative" checked onchange="db_clusterFilterChanges()">
+      <label for="Agglomerative">Agglomerative</label>
+    </span>
+    <span class="db_config_radio">
+      <input type="radio" id="clusterFilter2" name="clusterFilter"
+              value="KMeans" onchange="db_clusterFilterChanges()">
+      <label for="KMeans">KMeans</label>
+    </span>
+    <span class="db_config_radio">
+      <input type="radio" id="clusterFilter4" name="clusterFilter"
+              value="Neighborhood" onchange="db_clusterFilterChanges()">
+      <label for="Neighborhood">Neighborhood</label>
+    </span>
+    <span class="db_config_radio">
+      <input type="radio" id="clusterFilter1" name="clusterFilter"
+              value="None" onchange="db_clusterFilterChanges()">
+      <label for="None">None</label>
+    </span>
+    <span class="db_config_radio">
+      <input type="radio" id="clusterFilter5" name="clusterFilter"
+              value="OverallQual" onchange="db_clusterFilterChanges()">
+      <label for="OverallQual">OverallQual</label>
+    </span>
+  </div>
   <!--######################################################################-->
   <!--######################################################################-->
   <!--######################################################################-->

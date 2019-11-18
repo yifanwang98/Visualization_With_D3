@@ -3,3 +3,12 @@
   font-size: 1.0em;
   font-family: "Avenir Next", Helvetica, "Times New Roman";
 }
+
+.db_config {
+  font-size: 1.0em;
+  font-family: "Avenir Next", Helvetica, "Times New Roman";
+}
+
+.db_config_radio {
+  margin: 0 1em;
+}
