@@ -1,3 +1,5 @@
+const DB_COLOR = '#474f5c';
+
 function db_barchart(width, height, margin, id, filename, xLabel, yLabel, xAttr, yAttr) {
   // append the svg object to the body of the page
   d3.select(id).selectAll("*").remove();
@@ -63,7 +65,7 @@ function db_barchart(width, height, margin, id, filename, xLabel, yLabel, xAttr,
               d3.select(this).style("fill", HOVERED_BAR_COLOR);
           })
         .on('mouseout', function(d) {
-            d3.select(this).style("fill", DEFAULT_BAR_COLOR);
+            d3.select(this).style("fill", DB_COLOR);
         })
         .merge(u) // get the already existing elements as well
         .transition() // and apply changes to all of them
@@ -77,7 +79,7 @@ function db_barchart(width, height, margin, id, filename, xLabel, yLabel, xAttr,
           .attr("y", function(d) { return y(d[yAttr]);})
           .attr("height", function(d) { return height - y(d[yAttr]);})
           .call(d3.axisBottom(x))
-          .style("fill", "#69b3a2");
+          .style("fill", DB_COLOR);
       // If less bar in the new histogram, I delete the ones not in use anymore
       u.exit().remove()
     }
@@ -157,7 +159,7 @@ function db_scatter(width, height, margin, id, filename, xLabel, yLabel, attribu
           .attr("cx", function (d) { return x(d[attribute1]); } )
           .attr("cy", function (d) { return y(d[attribute2]); } )
           .attr("r", 1.75)
-          .style("fill", SCATTER_DOT_COLOUR);
+          .style("fill", DB_COLOR);
 
   })
 }
@@ -167,7 +169,7 @@ function db_barchart1() {
   // set the dimensions and margins of the graph
   var w = document.documentElement.clientWidth;
   console.log("document.documentElement.clientWidth: " + w);
-  var margin = {top: 20, right: 100, bottom: 50, left: 100};
+  var margin = {top: 20, right: 90, bottom: 50, left: 90};
   if (w < 600) {
     margin = {top: 20, right: 40, bottom: 50, left: 40};
   }
@@ -183,7 +185,7 @@ function db_barchart1() {
 function db_barchart2() {
   // set the dimensions and margins of the graph
   var w = document.documentElement.clientWidth;
-  var margin = {top:20, right: 10, bottom: 50, left: 100};
+  var margin = {top:20, right: 10, bottom: 50, left: 90};
   if (w < 600) {
     margin = {top: 20, right: 10, bottom: 50, left: 40};
   }
@@ -203,7 +205,7 @@ function db_scatter1() {
 
   // set the dimensions and margins of the graph
   var w = document.documentElement.clientWidth;
-  var margin = {top:20, right: 10, bottom: 50, left: 100};
+  var margin = {top:20, right: 10, bottom: 50, left: 90};
   if (w < 600) {
     margin = {top: 20, right: 10, bottom: 50, left: 40};
   }
