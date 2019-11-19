@@ -14,6 +14,26 @@ const DB_NEIGHBORHOOD_LIST = ['CollgCr', 'Veenker', 'NoRidge', 'Mitchel', 'Somer
 var clusterFilter = 'Agglomerative';
 var barchartSingleColor = true;
 
+var allFilter = {};
+
+function resetFilter() {
+  clusterFilter = 'Agglomerative';
+  barchartSingleColor = true;
+  allFilter = {};
+
+  db_clusterFilterChanges();
+}
+
+function applyFilter() {
+  db_scatter1();
+  db_scatter2();
+  if (clusterFilter === 'Neighborhood') {
+    db_barchartSingleColorChanges(false);
+  } else {
+    db_barchartSingleColorChanges(true);
+  }
+}
+
 function db_clusterFilterChanges() {
   clusterFilter = 'None';
   for (var i = 1; i <= 5; i++) {
@@ -22,13 +42,7 @@ function db_clusterFilterChanges() {
       clusterFilter = document.getElementById(id).value;
     }
   }
-  db_scatter1();
-  db_scatter2();
-  if (clusterFilter === 'Neighborhood') {
-    db_barchartSingleColorChanges(false);
-  } else {
-    db_barchartSingleColorChanges(true);
-  }
+  applyFilter();
 }
 
 function db_barchartSingleColorChanges(value) {
@@ -89,7 +103,8 @@ function db_barchart(width, height, margin, id, filename, xLabel, yLabel, xAttr,
           .value(function(d) { return d[xAttr]; })   // I need to give the vector of value
           .domain(x.domain());  // then the domain of the graphic
       // Y axis: update now that we know the domain
-      yAxis.transition().duration(1000).call(d3.axisLeft(y));
+      // yAxis.transition().duration(1000).call(d3.axisLeft(y));
+      yAxis.call(d3.axisLeft(y));
 
       // Join the rect with the bins data
       var u = svg.selectAll(null)
@@ -99,7 +114,7 @@ function db_barchart(width, height, margin, id, filename, xLabel, yLabel, xAttr,
       u.enter()
         .append("rect") // Add a new rect for each new elements
         .on('mouseover', function(d) {
-              d3.select(this).style("fill", '#a3a7ad');
+              // d3.select(this).style("fill", '#a3a7ad');
           })
         .on('mouseout', function(d) {
           if (!barchartSingleColor && xLabel === 'Neighborhood') {
@@ -114,9 +129,20 @@ function db_barchart(width, height, margin, id, filename, xLabel, yLabel, xAttr,
             d3.select(this).style("fill", DB_COLOR);
           }
         })
-        .merge(u) // get the already existing elements as well
-        .transition() // and apply changes to all of them
-        .duration(1000)
+        .on('mousedown',function(d) {
+            if (allFilter[xLabel] == null) {
+              allFilter[xLabel] = new Set();
+            }
+            if (allFilter[xLabel].has(d[xAttr])) {
+              allFilter[xLabel].delete(d[xAttr]);
+            } else {
+              allFilter[xLabel].add(d[xAttr]);
+            }
+            applyFilter();
+          })
+        // .merge(u) // get the already existing elements as well
+        // .transition() // and apply changes to all of them
+        // .duration(1000)
           .attr("x", function(d) { return x(d[xAttr]); })
           .attr("width", function(d) {
             var w = x.bandwidth() - 1;
@@ -125,6 +151,15 @@ function db_barchart(width, height, margin, id, filename, xLabel, yLabel, xAttr,
           })
           .attr("y", function(d) { return y(d[yAttr]);})
           .attr("height", function(d) { return height - y(d[yAttr]);})
+          .attr("opacity", function(d) {
+            if (allFilter[xLabel] == null || allFilter[xLabel].size == 0) {
+              return 1.0;
+            }
+            if (allFilter[xLabel].has(d[xAttr])) {
+              return 1.0;
+            }
+            return 0.25;
+          })
           .call(d3.axisBottom(x))
           .style("fill", function(d) {
             if (xLabel === 'Neighborhood') {
@@ -218,13 +253,39 @@ function db_scatter(width, height, margin, id, filename, xLabel, yLabel, attribu
           .attr("cx", function (d) { return x(d[attribute1]); } )
           .attr("cy", function (d) { return y(d[attribute2]); } )
           .attr("r", 1.75)
+          .attr("opacity", function(d) {
+            var shouldDisplay = true;
+            var isNotEmpty = false;
+            for (var k in allFilter) {
+              if (allFilter.hasOwnProperty(k)) {
+                if (allFilter[k].size == 0) {
+                  continue;
+                }
+                if (allFilter[k].has(d[k])) {
+                  shouldDisplay = shouldDisplay & true;
+                } else {
+                  shouldDisplay = false;
+                }
+                if (allFilter[k].size > 0) {
+                  isNotEmpty = true;
+                }
+              }
+            }
+            if (isNotEmpty) {
+              if (shouldDisplay) {
+                return 1.0;
+              }
+              return 0.0;
+            }
+            return 1.0;
+          })
           .style("fill", function (d) {
             if (clusterFilter === 'None') {
               return DB_COLOR;
             } else if (clusterFilter === 'Neighborhood') {
               for (var i = 0; i < DB_NEIGHBORHOOD_LIST.length; i++) {
                 if (d['Neighborhood'] === DB_NEIGHBORHOOD_LIST[i]) {
-                  return DB_NEIGHBORHOOD_COLORS[i + 1];
+                  return DB_NEIGHBORHOOD_COLORS[i];
                 }
               }
             } else if (clusterFilter === 'OverallQual') {

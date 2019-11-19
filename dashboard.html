@@ -44,16 +44,16 @@
     <div id="scatterPlot"></div>
   </div><!-- End of Scatter Plot Section -->
 
-
-  <!-- Bar Chart Section -->
-  <div id='barchartSection2' style="width: 30%; display: inline-block;">
-    <div id="barchart2"></div>
-  </div><!-- End of Bar Chart Section -->
-
-
   <div id='pcaPlotSection' style="width: 30%; display: inline-block;">
     <div id="pcaPlot"></div>
   </div><!-- End of Scatter Plot Section -->
+
+
+    <!-- Bar Chart Section -->
+    <div id='barchartSection2' style="width: 30%; display: inline-block; z-index: 99;">
+      <div id="barchart2"></div>
+    </div><!-- End of Bar Chart Section -->
+
 
 
   <!--**********************************************************************-->
@@ -88,6 +88,8 @@
       <label for="OverallQual">OverallQual</label>
     </span>
   </div>
+
+  <button onclick="resetFilter()"> Reset All</button>
   <!--######################################################################-->
   <!--######################################################################-->
   <!--######################################################################-->
