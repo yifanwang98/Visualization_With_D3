@@ -74,8 +74,17 @@ function db_barchart(width, height, margin, id, filename, xLabel, yLabel, xAttr,
   d3.csv(filename, function(data) {
     // X axis: scale and draw:
     var x = d3.scaleBand()
-              .domain(data.map(function(d) { return d[xAttr]; }))
+              // .domain(data.map(function(d) { return d[xAttr]; }))
               .range([1, width]);
+    if (xLabel === 'OverallQual') {
+      x.domain(["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"]);
+    } else {
+      x.domain(['NoRidge', 'NridgHt', 'StoneBr', 'OldTown', 'Veenker', 'Crawfor', 'Timber',
+                 'Gilbert', 'NAmes', 'Somerst', 'ClearCr', 'Edwards', 'SawyerW', 'CollgCr',
+                 'NWAmes', 'Mitchel', 'Blmngtn', 'BrkSide', 'SWISU', 'Sawyer', 'IDOTRR',
+                 'NPkVill', 'MeadowV', 'Blueste', 'BrDale']);
+    }
+
     svg.append("g")
         .attr("transform", "translate(0," + height + ")")
         .call(d3.axisBottom(x));
@@ -85,6 +94,32 @@ function db_barchart(width, height, margin, id, filename, xLabel, yLabel, xAttr,
               .domain([0, d3.max(data, function(d) {return +d[yAttr];})])
               .range([height, 0]).nice();
     var yAxis = svg.append("g");
+
+    data = data.filter(function(d){
+      var shouldDisplay = true;
+      for (var k in allFilter) {
+        if (allFilter.hasOwnProperty(k)) {
+          if (allFilter[k].size == 0) {
+            continue;
+          }
+          if (allFilter[k].has(d[k])) {
+            shouldDisplay = shouldDisplay & true;
+          } else {
+            shouldDisplay = false;
+          }
+        }
+      }
+      return shouldDisplay;
+    });
+
+
+    var tempDic = [];
+    for (var i = 0; i < x.domain().length; i++) {
+      var tempX = x.domain()[i];
+      var tmpData = data.filter(function(d){ return d[xAttr] === tempX; });
+      var tempY = d3.max(tmpData, function(d) { return parseFloat(d[yAttr]); });
+      tempDic.push({x: tempX, y: tempY})
+    }
 
     svg.append("text")
         .attr("class", "x label")
@@ -100,7 +135,7 @@ function db_barchart(width, height, margin, id, filename, xLabel, yLabel, xAttr,
     function update() {
       // set the parameters for the histogram
       var histogram = d3.histogram()
-          .value(function(d) { return d[xAttr]; })   // I need to give the vector of value
+          .value(function(d) { return d.x; })   // I need to give the vector of value
           .domain(x.domain());  // then the domain of the graphic
       // Y axis: update now that we know the domain
       // yAxis.transition().duration(1000).call(d3.axisLeft(y));
@@ -108,7 +143,7 @@ function db_barchart(width, height, margin, id, filename, xLabel, yLabel, xAttr,
 
       // Join the rect with the bins data
       var u = svg.selectAll(null)
-                  .data(data)
+                  .data(tempDic)
                   .attr("class", "barchart-bar");
       // Manage the existing bars and eventually the new ones:
       u.enter()
@@ -119,12 +154,12 @@ function db_barchart(width, height, margin, id, filename, xLabel, yLabel, xAttr,
         .on('mouseout', function(d) {
           if (!barchartSingleColor && xLabel === 'Neighborhood') {
             for (var i = 0; i < DB_NEIGHBORHOOD_LIST.length; i++) {
-              if (d[xAttr] === DB_NEIGHBORHOOD_LIST[i]) {
+              if (d.x === DB_NEIGHBORHOOD_LIST[i]) {
                 d3.select(this).style("fill", DB_NEIGHBORHOOD_COLORS[i]);
               }
             }
           } else if (xLabel === 'OverallQual' && clusterFilter === 'OverallQual') {
-            d3.select(this).style("fill", DB_NEIGHBORHOOD_COLORS[d[xAttr] - 1]);
+            d3.select(this).style("fill", DB_NEIGHBORHOOD_COLORS[d.x - 1]);
           } else {
             d3.select(this).style("fill", DB_COLOR);
           }
@@ -133,46 +168,46 @@ function db_barchart(width, height, margin, id, filename, xLabel, yLabel, xAttr,
             if (allFilter[xLabel] == null) {
               allFilter[xLabel] = new Set();
             }
-            if (allFilter[xLabel].has(d[xAttr])) {
-              allFilter[xLabel].delete(d[xAttr]);
+            if (allFilter[xLabel].has(d.x)) {
+              allFilter[xLabel].delete(d.x);
             } else {
-              allFilter[xLabel].add(d[xAttr]);
+              allFilter[xLabel].add(d.x);
             }
             applyFilter();
           })
         // .merge(u) // get the already existing elements as well
         // .transition() // and apply changes to all of them
         // .duration(1000)
-          .attr("x", function(d) { return x(d[xAttr]); })
+          .attr("x", function(d) { return x(d.x); })
           .attr("width", function(d) {
             var w = x.bandwidth() - 1;
             if (w < 0) { return 0;}
             return w;
           })
-          .attr("y", function(d) { return y(d[yAttr]);})
-          .attr("height", function(d) { return height - y(d[yAttr]);})
-          .attr("opacity", function(d) {
-            if (allFilter[xLabel] == null || allFilter[xLabel].size == 0) {
-              return 1.0;
-            }
-            if (allFilter[xLabel].has(d[xAttr])) {
-              return 1.0;
-            }
-            return 0.25;
-          })
+          .attr("y", function(d) { return y(d.y);})
+          .attr("height", function(d) { return height - y(d.y);})
+          // .attr("opacity", function(d) {
+          //   if (allFilter[xLabel] == null || allFilter[xLabel].size == 0) {
+          //     return 1.0;
+          //   }
+          //   if (allFilter[xLabel].has(d.x)) {
+          //     return 1.0;
+          //   }
+          //   return 0.25;
+          // })
           .call(d3.axisBottom(x))
           .style("fill", function(d) {
             if (xLabel === 'Neighborhood') {
               if (!barchartSingleColor) {
                 for (var i = 0; i < DB_NEIGHBORHOOD_LIST.length; i++) {
-                  if (d[xAttr] === DB_NEIGHBORHOOD_LIST[i]) {
+                  if (d.x === DB_NEIGHBORHOOD_LIST[i]) {
                     return DB_NEIGHBORHOOD_COLORS[i];
                   }
                 }
               }
             } else if (xLabel === 'OverallQual') {
               if (clusterFilter === 'OverallQual') {
-                return DB_NEIGHBORHOOD_COLORS[d[xAttr] - 1];
+                return DB_NEIGHBORHOOD_COLORS[d.x - 1];
               }
             }
             return DB_COLOR;
@@ -244,6 +279,23 @@ function db_scatter(width, height, margin, id, filename, xLabel, yLabel, attribu
     svg.append("g")
       .call(d3.axisLeft(y));
 
+    data = data.filter(function(d){
+      var shouldDisplay = true;
+      for (var k in allFilter) {
+        if (allFilter.hasOwnProperty(k)) {
+          if (allFilter[k].size == 0) {
+            continue;
+          }
+          if (allFilter[k].has(d[k])) {
+            shouldDisplay = shouldDisplay & true;
+          } else {
+            shouldDisplay = false;
+          }
+        }
+      }
+      return shouldDisplay;
+    });
+
     // Add dots
     svg.append('g')
         .selectAll("dot")
@@ -253,32 +305,6 @@ function db_scatter(width, height, margin, id, filename, xLabel, yLabel, attribu
           .attr("cx", function (d) { return x(d[attribute1]); } )
           .attr("cy", function (d) { return y(d[attribute2]); } )
           .attr("r", 1.75)
-          .attr("opacity", function(d) {
-            var shouldDisplay = true;
-            var isNotEmpty = false;
-            for (var k in allFilter) {
-              if (allFilter.hasOwnProperty(k)) {
-                if (allFilter[k].size == 0) {
-                  continue;
-                }
-                if (allFilter[k].has(d[k])) {
-                  shouldDisplay = shouldDisplay & true;
-                } else {
-                  shouldDisplay = false;
-                }
-                if (allFilter[k].size > 0) {
-                  isNotEmpty = true;
-                }
-              }
-            }
-            if (isNotEmpty) {
-              if (shouldDisplay) {
-                return 1.0;
-              }
-              return 0.0;
-            }
-            return 1.0;
-          })
           .style("fill", function (d) {
             if (clusterFilter === 'None') {
               return DB_COLOR;
@@ -310,9 +336,11 @@ function db_barchart1() {
   var h = document.documentElement.clientHeight * 0.35;
   var height = h - margin.top - margin.bottom;
 
-  var filename = 'data/DB_Neighborhood.csv';
-
-  db_barchart(width, height, margin, '#barchart', filename, 'Neighborhood', 'SalePrice', 'key', 'price');
+  // var filename = 'data/DB_Neighborhood.csv';
+  //
+  // db_barchart(width, height, margin, '#barchart', filename, 'Neighborhood', 'SalePrice', 'key', 'price');
+  var filename = 'data/processedData.csv';
+  db_barchart(width, height, margin, '#barchart', filename, 'Neighborhood', 'SalePrice', 'Neighborhood', 'SalePrice');
 }
 
 function db_barchart2() {
@@ -327,8 +355,10 @@ function db_barchart2() {
   width = width - margin.left - margin.right;
   height = height - margin.top - margin.bottom;
 
-  var filename = 'data/DB_OverallQual.csv';
-  db_barchart(width, height, margin, '#barchart2', filename, 'OverallQual', 'SalePrice', 'key', 'price');
+  // var filename = 'data/DB_OverallQual.csv';
+  var filename = 'data/processedData.csv';
+  db_barchart(width, height, margin, '#barchart2', filename, 'OverallQual', 'SalePrice', 'OverallQual', 'SalePrice');
+  // db_barchart(width, height, margin, '#barchart2', filename, 'OverallQual', 'SalePrice', 'key', 'price');
 }
 
 function db_scatter1() {
