@@ -40,56 +40,63 @@
   <!--**********************************************************************-->
   <!--**********************************************************************-->
   <!-- Scatter Plot Section -->
-  <div id='scatterPlotSection' style="width: 30%; display: inline-block;">
-    <div id="scatterPlot"></div>
-  </div><!-- End of Scatter Plot Section -->
+  <div style="text-align: center">
+    <span id='scatterPlotSection'>
+      <span id="scatterPlot"></span>
+    </span><!-- End of Scatter Plot Section -->
 
-  <div id='pcaPlotSection' style="width: 30%; display: inline-block;">
-    <div id="pcaPlot"></div>
-  </div><!-- End of Scatter Plot Section -->
-
+    <span id='pcaPlotSection'>
+      <span id="pcaPlot"></span>
+    </span><!-- End of Scatter Plot Section -->
 
     <!-- Bar Chart Section -->
-    <div id='barchartSection2' style="width: 30%; display: inline-block; z-index: 99;">
-      <div id="barchart2"></div>
-    </div><!-- End of Bar Chart Section -->
+    <span id='barchartSection2'>
+      <span id="barchart2"></span>
+    </span><!-- End of Bar Chart Section -->
 
-
-
-  <!--**********************************************************************-->
-  <!--**********************************************************************-->
-  <!--**********************************************************************-->
-
-  <div class="db_config" style="padding: 1em 5%;">
-    <span style="font-weight: 500;">Color Distinction:</span>
-    <span class="db_config_radio">
-      <input type="radio" id="clusterFilter3" name="clusterFilter"
-              value="Agglomerative" checked onchange="db_clusterFilterChanges()">
-      <label for="Agglomerative">Agglomerative</label>
-    </span>
-    <span class="db_config_radio">
-      <input type="radio" id="clusterFilter2" name="clusterFilter"
-              value="KMeans" onchange="db_clusterFilterChanges()">
-      <label for="KMeans">KMeans</label>
-    </span>
-    <span class="db_config_radio">
-      <input type="radio" id="clusterFilter4" name="clusterFilter"
-              value="Neighborhood" onchange="db_clusterFilterChanges()">
-      <label for="Neighborhood">Neighborhood</label>
-    </span>
-    <span class="db_config_radio">
-      <input type="radio" id="clusterFilter1" name="clusterFilter"
-              value="None" onchange="db_clusterFilterChanges()">
-      <label for="None">None</label>
-    </span>
-    <span class="db_config_radio">
-      <input type="radio" id="clusterFilter5" name="clusterFilter"
-              value="OverallQual" onchange="db_clusterFilterChanges()">
-      <label for="OverallQual">OverallQual</label>
-    </span>
   </div>
 
-  <button onclick="resetFilter()"> Reset All</button>
+  <!--**********************************************************************-->
+  <!--**********************************************************************-->
+  <!--**********************************************************************-->
+
+  <div style="padding: 1em 5%;">
+    <div style="padding: 1.5em 10%; text-align: center;">
+      <div class="title2">Configuration</div>
+    </div>
+    <div class="db_config">
+      <span style="font-weight: 500;">Color Distinction:</span>
+      <span class="db_config_radio">
+        <input type="radio" id="clusterFilter3" name="clusterFilter"
+                value="Agglomerative" checked onchange="db_clusterFilterChanges()">
+        <label for="Agglomerative">Agglomerative</label>
+      </span>
+      <span class="db_config_radio">
+        <input type="radio" id="clusterFilter2" name="clusterFilter"
+                value="KMeans" onchange="db_clusterFilterChanges()">
+        <label for="KMeans">KMeans</label>
+      </span>
+      <span class="db_config_radio">
+        <input type="radio" id="clusterFilter4" name="clusterFilter"
+                value="Neighborhood" onchange="db_clusterFilterChanges()">
+        <label for="Neighborhood">Neighborhood</label>
+      </span>
+      <span class="db_config_radio">
+        <input type="radio" id="clusterFilter1" name="clusterFilter"
+                value="None" onchange="db_clusterFilterChanges()">
+        <label for="None">None</label>
+      </span>
+      <span class="db_config_radio">
+        <input type="radio" id="clusterFilter5" name="clusterFilter"
+                value="OverallQual" onchange="db_clusterFilterChanges()">
+        <label for="OverallQual">OverallQual</label>
+      </span>
+    </div>
+
+    <div class="db_resetFilter" onclick="resetFilter()">
+      Reset All
+    </div>
+  </div>
   <!--######################################################################-->
   <!--######################################################################-->
   <!--######################################################################-->

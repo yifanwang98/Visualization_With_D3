@@ -345,11 +345,8 @@ function db_barchart1() {
 
 function db_barchart2() {
   // set the dimensions and margins of the graph
-  var w = document.documentElement.clientWidth;
-  var margin = {top:20, right: 10, bottom: 50, left: 90};
-  if (w < 600) {
-    margin = {top: 20, right: 10, bottom: 50, left: 40};
-  }
+  var w = document.documentElement.clientWidth - 100;
+  var margin = {top:20, right: 50, bottom: 50, left: 45};
   var width = w / 3;
   var height = w / 3 - 50;
   width = width - margin.left - margin.right;
@@ -367,11 +364,8 @@ function db_scatter1() {
   console.log(attribute1, attribute2);
 
   // set the dimensions and margins of the graph
-  var w = document.documentElement.clientWidth;
-  var margin = {top:20, right: 10, bottom: 50, left: 90};
-  if (w < 600) {
-    margin = {top: 20, right: 10, bottom: 50, left: 40};
-  }
+  var w = document.documentElement.clientWidth - 100;
+  var margin = {top:20, right: 40, bottom: 50, left: 50};
   var width = w / 3;
   var height = w / 3 - 50;
   width = width - margin.left - margin.right;
@@ -388,11 +382,8 @@ function db_scatter2() {
   console.log(attribute1, attribute2);
 
   // set the dimensions and margins of the graph
-  var w = document.documentElement.clientWidth;
-  var margin = {top:20, right: 10, bottom: 50, left: 100};
-  if (w < 600) {
-    margin = {top: 20, right: 10, bottom: 50, left: 40};
-  }
+  var w = document.documentElement.clientWidth - 100;
+  var margin = {top:20, right: 40, bottom: 50, left: 40};
   var width = w / 3;
   var height = w / 3 - 50;
   width = width - margin.left - margin.right;
