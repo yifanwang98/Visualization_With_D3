@@ -231,6 +231,10 @@ function db_scatter(width, height, margin, id, filename, xLabel, yLabel, attribu
     .append("svg")
       .attr("width", width + margin.left + margin.right)
       .attr("height", height + margin.top + margin.bottom)
+      .call( d3.brush() // Add the brush feature using the d3.brush function
+                // initialise the brush area with the whole graph area
+                .extent( [ [margin.left, margin.top], [width + margin.left + 1, height + margin.top + 1] ] )
+            )
     .append("g")
       .attr("transform",
             "translate(" + margin.left + "," + margin.top + ")");
@@ -392,4 +396,10 @@ function db_scatter2() {
 
   var filename = 'data/processedData.csv';
   db_scatter(width, height, margin, '#pcaPlot', filename, attribute1, attribute2, attribute1, attribute2);
+
+  // Add brushing
+  d3.select("#pcaPlot")
+    .call( d3.brush()                     // Add the brush feature using the d3.brush function
+    .extent( [ [margin.left, margin.top], [width, height] ] )       // initialise the brush area: start at 0,0 and finishes at width,height: it means I select the whole graph area
+  )
 }
