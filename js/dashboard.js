@@ -20,8 +20,23 @@ function resetFilter() {
   clusterFilter = 'Agglomerative';
   barchartSingleColor = true;
   allFilter = {};
-
+  resetNeighborhood();
+  resetOverallQual();
   db_clusterFilterChanges();
+}
+
+function resetNeighborhood() {
+  allFilter['Neighborhood'] = new Set();
+  for (var i = 0; i < DB_NEIGHBORHOOD_LIST.length; i++) {
+    allFilter['Neighborhood'].add(DB_NEIGHBORHOOD_LIST[i]);
+  }
+}
+
+function resetOverallQual() {
+  allFilter['OverallQual'] = new Set();
+  for (var i = 1; i <= 10; i++) {
+    allFilter['OverallQual'].add("" + (i));
+  }
 }
 
 function applyFilter() {
@@ -91,7 +106,7 @@ function db_barchart(width, height, margin, id, filename, xLabel, yLabel, xAttr,
 
     // Y axis: initialization
     var y = d3.scaleLinear()
-              .domain([0, d3.max(data, function(d) {return +d[yAttr];})])
+              .domain([-1, d3.max(data, function(d) {return +d[yAttr];})])
               .range([height, 0]).nice();
     var yAxis = svg.append("g");
 
@@ -99,13 +114,14 @@ function db_barchart(width, height, margin, id, filename, xLabel, yLabel, xAttr,
       var shouldDisplay = true;
       for (var k in allFilter) {
         if (allFilter.hasOwnProperty(k)) {
-          if (allFilter[k].size == 0) {
+          if (allFilter[k].size === 0) {
             continue;
           }
           if (allFilter[k].has(d[k])) {
             shouldDisplay = shouldDisplay & true;
           } else {
             shouldDisplay = false;
+            break;
           }
         }
       }
@@ -118,8 +134,12 @@ function db_barchart(width, height, margin, id, filename, xLabel, yLabel, xAttr,
       var tempX = x.domain()[i];
       var tmpData = data.filter(function(d){ return d[xAttr] === tempX; });
       var tempY = d3.max(tmpData, function(d) { return parseFloat(d[yAttr]); });
+      if (tempY == null) {
+        tempY = 0;
+      }
       tempDic.push({x: tempX, y: tempY})
     }
+
 
     svg.append("text")
         .attr("class", "x label")
@@ -148,36 +168,22 @@ function db_barchart(width, height, margin, id, filename, xLabel, yLabel, xAttr,
       // Manage the existing bars and eventually the new ones:
       u.enter()
         .append("rect") // Add a new rect for each new elements
-        .on('mouseover', function(d) {
-              // d3.select(this).style("fill", '#a3a7ad');
-          })
-        .on('mouseout', function(d) {
-          if (!barchartSingleColor && xLabel === 'Neighborhood') {
-            for (var i = 0; i < DB_NEIGHBORHOOD_LIST.length; i++) {
-              if (d.x === DB_NEIGHBORHOOD_LIST[i]) {
-                d3.select(this).style("fill", DB_NEIGHBORHOOD_COLORS[i]);
-              }
-            }
-          } else if (xLabel === 'OverallQual' && clusterFilter === 'OverallQual') {
-            d3.select(this).style("fill", DB_NEIGHBORHOOD_COLORS[d.x - 1]);
-          } else {
-            d3.select(this).style("fill", DB_COLOR);
-          }
-        })
         .on('mousedown',function(d) {
-            if (allFilter[xLabel] == null) {
-              allFilter[xLabel] = new Set();
-            }
             if (allFilter[xLabel].has(d.x)) {
               allFilter[xLabel].delete(d.x);
+              if (allFilter[xLabel].size === 0) {
+                if (xLabel == 'Neighborhood') {
+                  resetNeighborhood();
+                } else {
+                  resetOverallQual();
+                }
+              }
             } else {
               allFilter[xLabel].add(d.x);
             }
+
             applyFilter();
           })
-        // .merge(u) // get the already existing elements as well
-        // .transition() // and apply changes to all of them
-        // .duration(1000)
           .attr("x", function(d) { return x(d.x); })
           .attr("width", function(d) {
             var w = x.bandwidth() - 1;
@@ -186,17 +192,11 @@ function db_barchart(width, height, margin, id, filename, xLabel, yLabel, xAttr,
           })
           .attr("y", function(d) { return y(d.y);})
           .attr("height", function(d) { return height - y(d.y);})
-          // .attr("opacity", function(d) {
-          //   if (allFilter[xLabel] == null || allFilter[xLabel].size == 0) {
-          //     return 1.0;
-          //   }
-          //   if (allFilter[xLabel].has(d.x)) {
-          //     return 1.0;
-          //   }
-          //   return 0.25;
-          // })
           .call(d3.axisBottom(x))
           .style("fill", function(d) {
+            if (d.y <= 0) {
+              return "#eeeeee";
+            }
             if (xLabel === 'Neighborhood') {
               if (!barchartSingleColor) {
                 for (var i = 0; i < DB_NEIGHBORHOOD_LIST.length; i++) {
@@ -350,7 +350,7 @@ function db_barchart1() {
 function db_barchart2() {
   // set the dimensions and margins of the graph
   var w = document.documentElement.clientWidth - 100;
-  var margin = {top:20, right: 50, bottom: 50, left: 45};
+  var margin = {top:20, right: 50, bottom: 50, left: 50};
   var width = w / 3;
   var height = w / 3 - 50;
   width = width - margin.left - margin.right;
