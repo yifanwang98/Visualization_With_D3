@@ -120,6 +120,20 @@
         Select None</span>
     </div>
 
+    <div class="db_config">
+      <span style="font-weight: 500;">PCA or MDS:</span>
+      <span class="db_config_radio">
+        <input type="radio" id="pcaOrMDS_pca" name="pcaOrMDS"
+                value="pca" checked onchange="db_scatter3(false);">
+        <label for="pca">PCA</label>
+      </span>
+      <span class="db_config_radio">
+        <input type="radio" id="pcaOrMDS_mds" name="pcaOrMDS"
+                value="mds" onchange="db_scatter3(true);">
+        <label for="mds">MDS</label>
+      </span>
+    </div>
+
     <!-- Reset -->
     <div style="margin: 1em 0;">
       <table style="width: 100%; margin: 0; padding: 0; border-collapse: collapse;">

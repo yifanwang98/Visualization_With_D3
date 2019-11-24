@@ -10,7 +10,7 @@ const DB_NEIGHBORHOOD_LIST = ['CollgCr', 'Veenker', 'NoRidge', 'Mitchel', 'Somer
                                'NridgHt', 'Timber', 'Gilbert', 'OldTown', 'ClearCr', 'Crawfor',
                                'Edwards', 'NPkVill', 'StoneBr', 'BrDale', 'Blmngtn', 'SWISU',
                                'Blueste']
-const DB_SCATTER_LIST = ['PC1', 'PC2', 'GrLivArea', 'SalePrice', 'YearBuilt'];
+const DB_SCATTER_LIST = ['PC1', 'PC2', 'GrLivArea', 'SalePrice', 'YearBuilt', 'MDS1', 'MDS2'];
 const DB_DOMAINS = {};
 const DB_CLUSTER_SELECTION = [true, true, true, true];
 
@@ -59,7 +59,7 @@ function resetScatter() {
 function applyFilter() {
   db_scatter1();
   db_scatter2();
-  db_scatter3();
+  db_scatter3(document.getElementById('pcaOrMDS_mds').checked);
   if (clusterFilter === 'Neighborhood') {
     db_barchartSingleColorChanges(false);
   } else {
@@ -488,9 +488,13 @@ function db_scatter2() {
   )
 }
 
-function db_scatter3() {
+function db_scatter3(mds = false) {
   var attribute1 = 'PC1';
   var attribute2 = 'PC2';
+  if (mds) {
+    attribute1 = 'MDS1';
+    attribute2 = 'MDS2';
+  }
   console.log(attribute1, attribute2);
 
   // set the dimensions and margins of the graph
