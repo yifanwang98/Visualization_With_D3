@@ -10,6 +10,8 @@ const DB_NEIGHBORHOOD_LIST = ['CollgCr', 'Veenker', 'NoRidge', 'Mitchel', 'Somer
                                'NridgHt', 'Timber', 'Gilbert', 'OldTown', 'ClearCr', 'Crawfor',
                                'Edwards', 'NPkVill', 'StoneBr', 'BrDale', 'Blmngtn', 'SWISU',
                                'Blueste']
+const DB_SCATTER_LIST = ['PC1', 'PC2', 'GrLivArea', 'SalePrice'];
+const DB_DOMAINS = {};
 
 var clusterFilter = 'Agglomerative';
 var barchartSingleColor = true;
@@ -22,6 +24,7 @@ function resetFilter() {
   allFilter = {};
   resetNeighborhood();
   resetOverallQual();
+  resetScatter();
   db_clusterFilterChanges();
 }
 
@@ -37,6 +40,13 @@ function resetOverallQual() {
   for (var i = 1; i <= 10; i++) {
     allFilter['OverallQual'].add("" + (i));
   }
+}
+
+function resetScatter() {
+  allFilter['GrLivArea'] = null;
+  allFilter['SalePrice'] = null;
+  allFilter['PC1'] = null;
+  allFilter['PC2'] = null;
 }
 
 function applyFilter() {
@@ -111,21 +121,21 @@ function db_barchart(width, height, margin, id, filename, xLabel, yLabel, xAttr,
     var yAxis = svg.append("g");
 
     data = data.filter(function(d){
-      var shouldDisplay = true;
-      for (var k in allFilter) {
-        if (allFilter.hasOwnProperty(k)) {
-          if (allFilter[k].size === 0) {
-            continue;
-          }
-          if (allFilter[k].has(d[k])) {
-            shouldDisplay = shouldDisplay & true;
-          } else {
-            shouldDisplay = false;
-            break;
+      if (!allFilter['Neighborhood'].has(d['Neighborhood'])) {
+        return false;
+      }
+      if (!allFilter['OverallQual'].has(d['OverallQual'])) {
+        return false;
+      }
+      for (var i = 0; i < DB_SCATTER_LIST.length; i++) {
+        var kkk = DB_SCATTER_LIST[i];
+        if (allFilter[kkk] != null) {
+          if (DB_DOMAINS[kkk](d[kkk]) < allFilter[kkk][0] || DB_DOMAINS[kkk](d[kkk]) > allFilter[kkk][1]) {
+            return false;
           }
         }
       }
-      return shouldDisplay;
+      return true;
     });
 
 
@@ -232,18 +242,29 @@ function db_scatter(width, height, margin, id, filename, xLabel, yLabel, attribu
       .attr("width", width + margin.left + margin.right)
       .attr("height", height + margin.top + margin.bottom)
       .call( d3.brush() // Add the brush feature using the d3.brush function
-                // initialise the brush area with the whole graph area
-                .extent( [ [margin.left, margin.top], [width + margin.left + 1, height + margin.top + 1] ] )
-            )
+          // initialise the brush area with the whole graph area
+          .extent( [ [margin.left, margin.top], [width + margin.left + 1, height + margin.top + 1] ] )
+          .on("end", function () {
+            if (d3.event.selection == null) {
+              allFilter[xLabel] = null;
+              allFilter[yLabel] = null;
+            } else {
+              allFilter[xLabel] = [d3.event.selection[0][0] - margin.left, d3.event.selection[1][0] - margin.left];
+              allFilter[yLabel] = [d3.event.selection[0][1] - margin.top, d3.event.selection[1][1] - margin.top];
+            }
+            applyFilter();
+            console.log(allFilter);
+          })
+      )
     .append("g")
       .attr("transform",
             "translate(" + margin.left + "," + margin.top + ")");
-
   svg.append("text")
       .attr("class", "y label")
       .attr("text-anchor", "end")
       .attr("font-family", "Avenir")
       .attr("font-size", "14px")
+      .attr("fill", "black")
       .attr("y", 6)
       .attr("dy", "-1em")
       .attr("dx", "1.2em")
@@ -253,6 +274,7 @@ function db_scatter(width, height, margin, id, filename, xLabel, yLabel, attribu
       .attr("text-anchor", "end")
       .attr("font-family", "Avenir")
       .attr("font-size", "14px")
+      .attr("fill", "black")
       .attr("x", 6)
       .attr("dy", "" + (height + 30) + "px")
       .attr("dx", "" + (width - 5) + "px")
@@ -267,6 +289,7 @@ function db_scatter(width, height, margin, id, filename, xLabel, yLabel, attribu
               .domain([x_domainMin, x_domainMax])
               .range([0, width])
               .nice();
+    DB_DOMAINS[xLabel] = x;
     svg.append("g")
       .attr("transform", "translate(0," + (height - 0) + ")")
       .call(d3.axisBottom(x))
@@ -280,24 +303,26 @@ function db_scatter(width, height, margin, id, filename, xLabel, yLabel, attribu
               .domain([y_domainMin, y_domainMax])
               .range([height - 0, 0])
               .nice();
+    DB_DOMAINS[yLabel] = y;
     svg.append("g")
       .call(d3.axisLeft(y));
 
     data = data.filter(function(d){
-      var shouldDisplay = true;
-      for (var k in allFilter) {
-        if (allFilter.hasOwnProperty(k)) {
-          if (allFilter[k].size == 0) {
-            continue;
-          }
-          if (allFilter[k].has(d[k])) {
-            shouldDisplay = shouldDisplay & true;
-          } else {
-            shouldDisplay = false;
+      if (!allFilter['Neighborhood'].has(d['Neighborhood'])) {
+        return false;
+      }
+      if (!allFilter['OverallQual'].has(d['OverallQual'])) {
+        return false;
+      }
+      for (var i = 0; i < DB_SCATTER_LIST.length; i++) {
+        var kkk = DB_SCATTER_LIST[i];
+        if (allFilter[kkk] != null) {
+          if (DB_DOMAINS[kkk](d[kkk]) < allFilter[kkk][0] || DB_DOMAINS[kkk](d[kkk]) > allFilter[kkk][1]) {
+            return false;
           }
         }
       }
-      return shouldDisplay;
+      return true;
     });
 
     // Add dots
@@ -324,14 +349,14 @@ function db_scatter(width, height, margin, id, filename, xLabel, yLabel, attribu
             return DB_CLUSTER_COLORS[d[clusterFilter]];
           } );
 
-  })
+  });
 }
 
 
 function db_barchart1() {
   // set the dimensions and margins of the graph
   var w = document.documentElement.clientWidth;
-  console.log("document.documentElement.clientWidth: " + w);
+  // console.log("document.documentElement.clientWidth: " + w);
   var margin = {top: 20, right: 90, bottom: 50, left: 90};
   if (w < 600) {
     margin = {top: 20, right: 40, bottom: 50, left: 40};
@@ -350,7 +375,7 @@ function db_barchart1() {
 function db_barchart2() {
   // set the dimensions and margins of the graph
   var w = document.documentElement.clientWidth - 100;
-  var margin = {top:20, right: 50, bottom: 50, left: 50};
+  var margin = {top:20, right: 50, bottom: 50, left: 48};
   var width = w / 3;
   var height = w / 3 - 50;
   width = width - margin.left - margin.right;
@@ -374,7 +399,6 @@ function db_scatter1() {
   var height = w / 3 - 50;
   width = width - margin.left - margin.right;
   height = height - margin.top - margin.bottom;
-
 
   var filename = 'data/processedData.csv';
   db_scatter(width, height, margin, '#scatterPlot', filename, attribute1, attribute2, attribute1, attribute2);
