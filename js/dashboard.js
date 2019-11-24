@@ -141,10 +141,20 @@ function db_barchart(width, height, margin, id, filename, xLabel, yLabel, xAttr,
                  'NWAmes', 'Mitchel', 'Blmngtn', 'BrkSide', 'SWISU', 'Sawyer', 'IDOTRR',
                  'NPkVill', 'MeadowV', 'Blueste', 'BrDale']);
     }
-
-    svg.append("g")
-        .attr("transform", "translate(0," + height + ")")
-        .call(d3.axisBottom(x));
+    if (xLabel == 'Neighborhood') {
+      svg.append("g")
+          .attr("transform", "translate(0," + height + ")")
+          .call(d3.axisBottom(x))
+          .selectAll("text")
+            .style("text-anchor", "end")
+            .attr("dx", "-.3em")
+            .attr("dy", ".15em")
+            .attr("transform", "rotate(-30)");
+    } else {
+      svg.append("g")
+          .attr("transform", "translate(0," + height + ")")
+          .call(d3.axisBottom(x));
+    }
 
     // Y axis: initialization
     var y = d3.scaleLinear()
@@ -188,14 +198,13 @@ function db_barchart(width, height, margin, id, filename, xLabel, yLabel, xAttr,
       tempDic.push({x: tempX, y: tempY})
     }
 
-
     svg.append("text")
         .attr("class", "x label")
         .attr("text-anchor", "end")
         .attr("font-family", "Avenir")
         .attr("font-size", "14px")
         .attr("x", 6)
-        .attr("dy", "" + (height + 30) + "px")
+        .attr("dy", "" + (height + 40) + "px")
         .attr("dx", "" + (width - 5) + "px")
         .text(xLabel);
 
@@ -314,7 +323,7 @@ function db_scatter(width, height, margin, id, filename, xLabel, yLabel, attribu
       .attr("font-size", "14px")
       .attr("fill", "black")
       .attr("x", 6)
-      .attr("dy", "" + (height + 30) + "px")
+      .attr("dy", "" + (height + 35) + "px")
       .attr("dx", "" + (width - 5) + "px")
       .text(xLabel);
 
@@ -399,14 +408,14 @@ function db_scatter(width, height, margin, id, filename, xLabel, yLabel, attribu
 
 function db_barchart1() {
   // set the dimensions and margins of the graph
-  var w = document.documentElement.clientWidth;
+  var w = document.documentElement.clientWidth - 100;
   // console.log("document.documentElement.clientWidth: " + w);
-  var margin = {top: 20, right: 90, bottom: 50, left: 90};
+  var margin = {top: 20, right: 10, bottom: 50, left: 50};
   if (w < 600) {
     margin = {top: 20, right: 40, bottom: 50, left: 40};
   }
-  var width = w - margin.left - margin.right;
-  var h = document.documentElement.clientHeight * 0.35;
+  var width = 2 * w / 3 - margin.left - margin.right;
+  var h = document.documentElement.clientHeight * 0.4;
   var height = h - margin.top - margin.bottom;
 
   // var filename = 'data/DB_Neighborhood.csv';
@@ -424,6 +433,8 @@ function db_barchart2() {
   var height = w / 3 - 50;
   width = width - margin.left - margin.right;
   height = height - margin.top - margin.bottom;
+  var h = document.documentElement.clientHeight * 0.4;
+  height = h - margin.top - margin.bottom;
 
   // var filename = 'data/DB_OverallQual.csv';
   var filename = 'data/processedData.csv';
@@ -445,12 +456,17 @@ function db_scatter1() {
   height = height - margin.top - margin.bottom;
 
   var filename = 'data/processedData.csv';
-  db_scatter(width, height, margin, '#scatterPlot', filename, attribute1, attribute2, attribute1, attribute2);
+  db_scatter(width, height, margin, '#scatterPlot1', filename, attribute1, attribute2, attribute1, attribute2);
+  // Add brushing
+  d3.select("#scatterPlot1")
+    .call( d3.brush()                     // Add the brush feature using the d3.brush function
+    .extent( [ [margin.left, margin.top], [width, height] ] )       // initialise the brush area: start at 0,0 and finishes at width,height: it means I select the whole graph area
+  )
 }
 
 function db_scatter2() {
-  var attribute1 = 'PC1';
-  var attribute2 = 'PC2';
+  var attribute1 = 'GrLivArea';
+  var attribute2 = 'YearBuilt';
   console.log(attribute1, attribute2);
 
   // set the dimensions and margins of the graph
@@ -463,18 +479,18 @@ function db_scatter2() {
 
 
   var filename = 'data/processedData.csv';
-  db_scatter(width, height, margin, '#pcaPlot', filename, attribute1, attribute2, attribute1, attribute2);
+  db_scatter(width, height, margin, '#scatterPlot2', filename, attribute1, attribute2, attribute1, attribute2);
 
   // Add brushing
-  d3.select("#pcaPlot")
+  d3.select("#scatterPlot2")
     .call( d3.brush()                     // Add the brush feature using the d3.brush function
     .extent( [ [margin.left, margin.top], [width, height] ] )       // initialise the brush area: start at 0,0 and finishes at width,height: it means I select the whole graph area
   )
 }
 
 function db_scatter3() {
-  var attribute1 = 'GrLivArea';
-  var attribute2 = 'YearBuilt';
+  var attribute1 = 'PC1';
+  var attribute2 = 'PC2';
   console.log(attribute1, attribute2);
 
   // set the dimensions and margins of the graph

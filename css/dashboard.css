@@ -50,3 +50,11 @@
 .db_resetFilter_Small:hover {
   background-color: #dadbde;
 }
+
+.db_configSection {
+  padding: 1em 5% 2em 5%;
+}
+
+body {
+  background-image: url('so-white.png');
+}
