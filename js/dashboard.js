@@ -10,7 +10,7 @@ const DB_NEIGHBORHOOD_LIST = ['CollgCr', 'Veenker', 'NoRidge', 'Mitchel', 'Somer
                                'NridgHt', 'Timber', 'Gilbert', 'OldTown', 'ClearCr', 'Crawfor',
                                'Edwards', 'NPkVill', 'StoneBr', 'BrDale', 'Blmngtn', 'SWISU',
                                'Blueste']
-const DB_SCATTER_LIST = ['PC1', 'PC2', 'GrLivArea', 'SalePrice'];
+const DB_SCATTER_LIST = ['PC1', 'PC2', 'GrLivArea', 'SalePrice', 'YearBuilt'];
 const DB_DOMAINS = {};
 const DB_CLUSTER_SELECTION = [true, true, true, true];
 
@@ -52,11 +52,14 @@ function resetScatter() {
   allFilter['SalePrice'] = null;
   allFilter['PC1'] = null;
   allFilter['PC2'] = null;
+  allFilter['MDS1'] = null;
+  allFilter['MDS2'] = null;
 }
 
 function applyFilter() {
   db_scatter1();
   db_scatter2();
+  db_scatter3();
   if (clusterFilter === 'Neighborhood') {
     db_barchartSingleColorChanges(false);
   } else {
@@ -464,6 +467,30 @@ function db_scatter2() {
 
   // Add brushing
   d3.select("#pcaPlot")
+    .call( d3.brush()                     // Add the brush feature using the d3.brush function
+    .extent( [ [margin.left, margin.top], [width, height] ] )       // initialise the brush area: start at 0,0 and finishes at width,height: it means I select the whole graph area
+  )
+}
+
+function db_scatter3() {
+  var attribute1 = 'GrLivArea';
+  var attribute2 = 'YearBuilt';
+  console.log(attribute1, attribute2);
+
+  // set the dimensions and margins of the graph
+  var w = document.documentElement.clientWidth - 100;
+  var margin = {top:20, right: 40, bottom: 50, left: 40};
+  var width = w / 3;
+  var height = w / 3 - 50;
+  width = width - margin.left - margin.right;
+  height = height - margin.top - margin.bottom;
+
+
+  var filename = 'data/processedData.csv';
+  db_scatter(width, height, margin, '#scatterPlot3', filename, attribute1, attribute2, attribute1, attribute2);
+
+  // Add brushing
+  d3.select("#scatterPlot3")
     .call( d3.brush()                     // Add the brush feature using the d3.brush function
     .extent( [ [margin.left, margin.top], [width, height] ] )       // initialise the brush area: start at 0,0 and finishes at width,height: it means I select the whole graph area
   )

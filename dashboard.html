@@ -33,8 +33,8 @@
   <!--######################################################################-->
 
   <!-- Bar Chart Section -->
-  <div id='barchartSection'>
-    <div id="barchart"></div>
+  <div style="text-align: center">
+    <span id="barchart"></span>
   </div><!-- End of Bar Chart Section -->
   <!--**********************************************************************-->
   <!--**********************************************************************-->
@@ -54,6 +54,13 @@
       <span id="barchart2"></span>
     </span><!-- End of Bar Chart Section -->
 
+  </div>
+
+  <!-- Scatter Plot Section -->
+  <div style="text-align: center">
+    <span>
+      <span id="scatterPlot3"></span>
+    </span><!-- End of Scatter Plot Section -->
   </div>
 
   <!--**********************************************************************-->
@@ -176,6 +183,7 @@
   // Scatter
   db_scatter1();
   db_scatter2();
+  db_scatter3();
 
   window.onresize = function(event) {
       waitForFinalEvent(function(){
@@ -183,6 +191,7 @@
         db_barchart2();
         db_scatter1();
         db_scatter2();
+        db_scatter3();
         //...
       }, 500, "some unique string");
 
