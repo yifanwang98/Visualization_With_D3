@@ -58,3 +58,12 @@
 body {
   background-image: url('so-white.png');
 }
+
+.db_pcaBiplotAxis line, .db_pcaBiplotAxis path {
+  stroke: #b7293e;
+}
+
+.db_pcaBiplotAxis text {
+  fill: #b7293e;
+  font-size: 1em;
+}

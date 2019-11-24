@@ -402,6 +402,67 @@ function db_scatter(width, height, margin, id, filename, xLabel, yLabel, attribu
             return DB_CLUSTER_COLORS[d[clusterFilter]];
           } );
 
+      if (xLabel === 'PC1') {
+        d3.csv("data/DB_pca_components.csv", function(data) {
+          var x_ratio = 45;
+          var xx = d3.scaleLinear()
+                    .domain([x.domain()[0] / x_ratio, x.domain()[1] / x_ratio])
+                    .range([0, width])
+                    .nice();
+          svg.append("g")
+              .call(d3.axisTop(xx))
+              .attr("class", "db_pcaBiplotAxis");
+
+          var y_ratio = 80;
+          var yy = d3.scaleLinear()
+                    .domain([y.domain()[0] / y_ratio, y.domain()[1] / y_ratio])
+                    .range([height, 0]);
+          svg.append("g")
+              .attr("transform", "translate(" + (width) + ", 0)")
+              .call(d3.axisRight(yy))
+              .attr("class", "db_pcaBiplotAxis");
+          svg.append("g")
+              .selectAll("stroke")
+              .data(data)
+              .enter()
+                .append("line")
+                .attr("x1", x(0))
+                .attr("y1", y(0))
+                .attr("x2", function (d) { return xx(d['Component 1']); })
+                .attr("y2", function (d) { return yy(d['Component 2']); })
+                .attr("stroke-width", 1.75)
+                .attr("stroke", "#b7293e");
+
+          svg.append("g")
+              .selectAll("text")
+              .data(data)
+              .enter()
+                .append("text")
+                .attr("x", function (d) {
+                  if (d["Attribute"] === 'GrLivArea') {
+                    return xx(d['Component 1']) - width * 0.137;
+                  }
+                  return xx(d['Component 1']) + 1; })
+                .attr("y", function (d) {
+                  if (d["Attribute"] === 'GrLivArea') {
+                    return yy(d['Component 2']) - 1;
+                  }
+                  if (d["Attribute"] === 'OverallQual') {
+                    return yy(d['Component 2']) + height * 0.02;
+                  }
+                  if (d["Attribute"] === 'YearBuilt') {
+                    return yy(d['Component 2']) - height * 0.01;
+                  }
+                  return yy(d['Component 2']);
+                })
+                .text(function (d) { return d["Attribute"]; })
+                .attr("font-family", "Avenir")
+                .attr("font-size", "11px")
+                .attr("font-weight", "500")
+                .attr("fill", "#b7293e");
+
+        });
+      }
   });
 }
 
