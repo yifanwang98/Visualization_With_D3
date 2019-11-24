@@ -60,10 +60,12 @@
   <!--**********************************************************************-->
   <!--**********************************************************************-->
 
-  <div style="padding: 1em 5%;">
+  <div style="padding: 1em 5% 2em 5%;">
     <div style="padding: 1.5em 10%; text-align: center;">
-      <div class="title2">Configuration</div>
+      <div class="title2">Configurations</div>
     </div>
+
+
     <div class="db_config">
       <span style="font-weight: 500;">Color Distinction:</span>
       <span class="db_config_radio">
@@ -93,7 +95,41 @@
       </span>
     </div>
 
-    <div style="margin-top: 1em;">
+    <!-- Cluster Selection -->
+    <div id="clusterSelectionSection" class="db_config" style="margin: 1em 0 ;">
+      <span style="font-weight: 500;">Cluster:</span>
+      <span class="db_config_radio">
+        <input type="checkbox" id="clusterSelection1" name="clusterSelection"
+                value="c1" checked onchange="db_clusterSelectionChanges()">
+        <div style="display: inline-block; width: 0.15em;" id='l_clusterSelection1'>&nbsp;</div>
+        <label for="c1">Cluster 1</label>
+      </span>
+      <span class="db_config_radio">
+        <input type="checkbox" id="clusterSelection2" name="clusterSelection"
+                value="c2" checked onchange="db_clusterSelectionChanges()">
+        <div style="display: inline-block; width: 0.15em;" id='l_clusterSelection2'>&nbsp;</div>
+        <label for="c2">Cluster 2</label>
+      </span>
+      <span class="db_config_radio">
+        <input type="checkbox" id="clusterSelection3" name="clusterSelection"
+                value="c3" checked onchange="db_clusterSelectionChanges()">
+        <div style="display: inline-block; width: 0.15em;" id='l_clusterSelection3'>&nbsp;</div>
+        <label for="c3">Cluster 3</label>
+      </span>
+      <span class="db_config_radio">
+        <input type="checkbox" id="clusterSelection4" name="clusterSelection"
+                value="c4" checked onchange="db_clusterSelectionChanges()">
+        <div style="display: inline-block; width: 0.15em;" id='l_clusterSelection4'>&nbsp;</div>
+        <label for="c4">Cluster 4</label>
+      </span>
+      <span class="db_config_checkboxText" onclick="db_clusterSelectionChangesAll(true)">
+        Select All</span>
+      <span class="db_config_checkboxText" onclick="db_clusterSelectionChangesAll(false)">
+        Select None</span>
+    </div>
+
+    <!-- Reset -->
+    <div style="margin: 1em 0;">
       <table style="width: 100%; margin: 0; padding: 0; border-collapse: collapse;">
         <col width=50%/>
         <col width=50%/>
@@ -130,6 +166,10 @@
   resetNeighborhood();
   resetOverallQual();
   resetScatter();
+  for (var i = 1; i <= 4; i++) {
+    document.getElementById('l_clusterSelection' + i).style.color = DB_CLUSTER_COLORS[i - 1];
+    document.getElementById('l_clusterSelection' + i).style.backgroundColor = DB_CLUSTER_COLORS[i - 1];
+  }
   // Histogram
   db_barchart1();
   db_barchart2();

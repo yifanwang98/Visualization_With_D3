@@ -13,6 +13,13 @@
   margin: 0 1em;
 }
 
+.db_config_checkboxText {
+  margin: 0 1em;
+  text-decoration: underline;
+  cursor: pointer;
+  font-style: oblique;
+}
+
 .db_resetFilter {
   background-color: #474f5c;
   color: white;
@@ -22,7 +29,7 @@
   text-align: center;
   margin: 0.75em 0;
   cursor: pointer;
-  padding: 0.6em 0;
+  padding: 0.7em 0;
 }
 
 .db_resetFilter:hover {
@@ -30,12 +37,16 @@
 }
 
 .db_resetFilter_Small {
-  background-color: #474f5c;
-  color: white;
+  background-color: #ecedee;
+  color: #31363f;
   font-size: 1em;
   font-family: "Avenir Next", Helvetica, "Times New Roman";
   border-radius: 5px;
   text-align: center;
   cursor: pointer;
-  padding: 0.6em 0;
+  padding: 0.7em 0;
+}
+
+.db_resetFilter_Small:hover {
+  background-color: #dadbde;
 }

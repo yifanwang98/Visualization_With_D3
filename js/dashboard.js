@@ -1,5 +1,5 @@
 const DB_COLOR = '#474f5c';
-const DB_CLUSTER_COLORS = ['#bd24a0', '#ff9b00', '#ce0a0a', '#08c9c2'];
+const DB_CLUSTER_COLORS = ['#db9f1d', '#0193bd', '#129793', '#374749'];
 const DB_NEIGHBORHOOD_COLORS = ['#bbe7d2', '#83b0a6', '#374749', '#3d9674', '#182f2d',
                                 '#3999a1', '#4fc5e7', '#aafff9', '#4f8fbf', '#073749',
                                 '#fa7268', '#eb5757', '#e61e50', '#e01e5a', '#e53974',
@@ -12,6 +12,7 @@ const DB_NEIGHBORHOOD_LIST = ['CollgCr', 'Veenker', 'NoRidge', 'Mitchel', 'Somer
                                'Blueste']
 const DB_SCATTER_LIST = ['PC1', 'PC2', 'GrLivArea', 'SalePrice'];
 const DB_DOMAINS = {};
+const DB_CLUSTER_SELECTION = [true, true, true, true];
 
 var clusterFilter = 'Agglomerative';
 var barchartSingleColor = true;
@@ -19,6 +20,10 @@ var barchartSingleColor = true;
 var allFilter = {};
 
 function resetFilter() {
+  for (var i = 1; i <= 4; i++) {
+    DB_CLUSTER_SELECTION[i - 1] = true;
+    document.getElementById('clusterSelection' + i).checked = true;
+  }
   clusterFilter = 'Agglomerative';
   barchartSingleColor = true;
   allFilter = {};
@@ -66,6 +71,30 @@ function db_clusterFilterChanges() {
     if (document.getElementById(id).checked) {
       clusterFilter = document.getElementById(id).value;
     }
+  }
+  if (clusterFilter == 'Agglomerative' || clusterFilter == 'KMeans') {
+    document.getElementById('clusterSelectionSection').style.display = 'block';
+    for (var i = 1; i <= 4; i++) {
+      document.getElementById('l_clusterSelection' + i).style.color = DB_CLUSTER_COLORS[i - 1];
+      document.getElementById('l_clusterSelection' + i).style.backgroundColor = DB_CLUSTER_COLORS[i - 1];
+    }
+  } else {
+    document.getElementById('clusterSelectionSection').style.display = 'none';
+  }
+  applyFilter();
+}
+
+function db_clusterSelectionChanges() {
+  for (var i = 1; i <= 4; i++) {
+    DB_CLUSTER_SELECTION[i - 1] = document.getElementById('clusterSelection' + i).checked;
+  }
+  applyFilter();
+}
+
+function db_clusterSelectionChangesAll(val) {
+  for (var i = 1; i <= 4; i++) {
+    DB_CLUSTER_SELECTION[i - 1] = val;
+    document.getElementById('clusterSelection' + i).checked = val;
   }
   applyFilter();
 }
@@ -121,6 +150,12 @@ function db_barchart(width, height, margin, id, filename, xLabel, yLabel, xAttr,
     var yAxis = svg.append("g");
 
     data = data.filter(function(d){
+      if (clusterFilter == 'Agglomerative' || clusterFilter == 'KMeans') {
+        if (!DB_CLUSTER_SELECTION[d[clusterFilter]]) {
+          return false;
+        }
+      }
+
       if (!allFilter['Neighborhood'].has(d['Neighborhood'])) {
         return false;
       }
@@ -308,6 +343,12 @@ function db_scatter(width, height, margin, id, filename, xLabel, yLabel, attribu
       .call(d3.axisLeft(y));
 
     data = data.filter(function(d){
+      if (clusterFilter == 'Agglomerative' || clusterFilter == 'KMeans') {
+        if (!DB_CLUSTER_SELECTION[d[clusterFilter]]) {
+          return false;
+        }
+      }
+
       if (!allFilter['Neighborhood'].has(d['Neighborhood'])) {
         return false;
       }
