@@ -68,3 +68,18 @@ body {
   fill: #b7293e;
   font-size: 1em;
 }
+
+
+.db_previouly_on, .db_previouly_on:link, .db_previouly_on:visited {
+  color: #474f5c;
+  font-size: 1.2em;
+  text-decoration: none;
+  font-family: "Avenir Next", Helvetica, "Times New Roman";
+  font-weight: 500;
+  padding: 1em 5%;
+}
+
+.db_previouly_on:hover {
+  color: #000;
+  font-style: italic;
+}
