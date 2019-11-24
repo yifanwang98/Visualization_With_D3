@@ -57,6 +57,7 @@
 
 body {
   background-image: url('so-white.png');
+  min-width: 1100px;
 }
 
 .db_pcaBiplotAxis line, .db_pcaBiplotAxis path {

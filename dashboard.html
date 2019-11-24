@@ -7,11 +7,9 @@
   <!-- Load Script -->
   <script src="lib/d3.v4.min.js"></script>
   <script src="js/events.js"></script>
-  <script src="js/barchart.js"></script>
-  <script src="js/scatter.js"></script>
+  <script src="js/dashboard_scatter.js"></script>
+  <script src="js/dashboard_barchart.js"></script>
   <script src="js/dashboard.js"></script>
-  <script src="js/scatterMatrix.js"></script>
-  <script src="js/parallelCoordinates.js"></script>
   <script src="https://kit.fontawesome.com/a076d05399.js"></script>
   <!-- Stylesheet -->
   <link href="css/index.css" type="text/css" rel="stylesheet">
@@ -81,6 +79,11 @@
         <label for="None">None</label>
       </span>
       <span class="db_config_radio">
+        <input type="radio" id="clusterFilter6" name="clusterFilter"
+                value="OverallCond" onchange="db_clusterFilterChanges()">
+        <label for="OverallCond">OverallCond</label>
+      </span>
+      <span class="db_config_radio">
         <input type="radio" id="clusterFilter5" name="clusterFilter"
                 value="OverallQual" onchange="db_clusterFilterChanges()">
         <label for="OverallQual">OverallQual</label>
@@ -120,7 +123,23 @@
         Select None</span>
     </div>
 
-    <div class="db_config">
+
+    <div class="db_config" style="margin: 1em 0 ;">
+      <span style="font-weight: 500;">OverallQual or OverallCond:</span>
+      <span class="db_config_radio">
+        <input type="radio" id="overallQualOrOverallCond_q" name="overallQualOrOverallCond"
+                value="OverallQual" checked onchange="db_barchart2(false);">
+        <label for="OverallQual">OverallQual</label>
+      </span>
+      <span class="db_config_radio">
+        <input type="radio" id="overallQualOrOverallCond_c" name="overallQualOrOverallCond"
+                value="OverallCond" onchange="db_barchart2(true);">
+        <label for="OverallCond">OverallCond</label>
+      </span>
+    </div>
+
+
+    <div class="db_config" style="margin: 1em 0 ;">
       <span style="font-weight: 500;">PCA or MDS:</span>
       <span class="db_config_radio">
         <input type="radio" id="pcaOrMDS_pca" name="pcaOrMDS"
@@ -137,14 +156,22 @@
     <!-- Reset -->
     <div style="margin: 1em 0;">
       <table style="width: 100%; margin: 0; padding: 0; border-collapse: collapse;">
-        <col width=50%/>
-        <col width=50%/>
+        <col width=33.33%/>
+        <col width=33.34%/>
+        <col width=33.33%/>
         <tr>
           <td style="margin: 0; padding: 0;">
             <div class="db_resetFilter_Small"
                   style="margin-right: 1%;"
                   onclick="resetNeighborhood(); applyFilter();">
               Reset Neighborhood
+            </div>
+          </td>
+          <td style="margin: 0; padding: 0;">
+            <div class="db_resetFilter_Small"
+                  style="margin-left: 1%;"
+                  onclick="resetOverallCond(); applyFilter();">
+              Reset OverallCond
             </div>
           </td>
           <td style="margin: 0; padding: 0;">
@@ -175,6 +202,7 @@
 <script>
   resetNeighborhood();
   resetOverallQual();
+  resetOverallCond();
   resetScatter();
   for (var i = 1; i <= 4; i++) {
     document.getElementById('l_clusterSelection' + i).style.color = DB_CLUSTER_COLORS[i - 1];
@@ -191,10 +219,10 @@
   window.onresize = function(event) {
       waitForFinalEvent(function(){
         db_barchart1();
-        db_barchart2();
+        db_barchart2(document.getElementById('overallQualOrOverallCond_c').checked);
         db_scatter1();
         db_scatter2();
-        db_scatter3();
+        db_scatter3(document.getElementById('pcaOrMDS_mds').checked);
         //...
       }, 500, "some unique string");
 
