@@ -20,15 +20,6 @@ var barchartSingleColor = true;
 var allFilter = {};
 
 function resetFilter() {
-  // var color = d3.scaleLinear()
-  //   .domain([0, DB_NEIGHBORHOOD_COLORS.length])
-  //   .range(["#065d87", "#8ec2c5"]);
-  //
-  // for (var i = 0; i < DB_NEIGHBORHOOD_COLORS.length; i++) {
-  //   DB_NEIGHBORHOOD_COLORS[i] = color(i);
-  // }
-  //
-
   for (var i = 1; i <= 4; i++) {
     DB_CLUSTER_SELECTION[i - 1] = true;
     document.getElementById('clusterSelection' + i).checked = true;
