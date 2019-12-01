@@ -1,15 +1,14 @@
 const DB_COLOR = '#474f5c';
 const DB_CLUSTER_COLORS = ['#db9f1d', '#0193bd', '#129793', '#374749'];
-const DB_NEIGHBORHOOD_COLORS = ['#bbe7d2', '#83b0a6', '#374749', '#3d9674', '#182f2d',
+const DB_NEIGHBORHOOD_COLORS = ['#82d3ad', '#83b0a6', '#374749', '#3d9674', '#182f2d',
+                                '#d9b96a', '#ecbb45', '#bf9d34', '#a97524', '#a15421',
+                                '#fa7268', '#eb5757', '#e61e50', '#c90000', '#e53974',
                                 '#3999a1', '#4fc5e7', '#aafff9', '#4f8fbf', '#073749',
-                                '#fa7268', '#eb5757', '#e61e50', '#e01e5a', '#e53974',
-                                '#f2ce76', '#ecbb45', '#bf9d34', '#a97524', '#a15421',
-                                '#004c97', '#ff9e15', '#e61e50', '#4cb04f', '#00bcd4']
-const DB_NEIGHBORHOOD_LIST = ['CollgCr', 'Veenker', 'NoRidge', 'Mitchel', 'Somerst', 'NWAmes',
-                               'BrkSide', 'Sawyer', 'NAmes', 'SawyerW', 'IDOTRR', 'MeadowV',
-                               'NridgHt', 'Timber', 'Gilbert', 'OldTown', 'ClearCr', 'Crawfor',
-                               'Edwards', 'NPkVill', 'StoneBr', 'BrDale', 'Blmngtn', 'SWISU',
-                               'Blueste']
+                                '#004c97', '#ff9e15', '#e61e50', '#4cb04f', '#00bcd4'];
+const DB_NEIGHBORHOOD_LIST = ['NoRidge', 'NridgHt', 'StoneBr', 'OldTown', 'Veenker', 'Crawfor', 'Timber',
+           'Gilbert', 'NAmes', 'Somerst', 'ClearCr', 'Edwards', 'SawyerW', 'CollgCr',
+           'NWAmes', 'Mitchel', 'Blmngtn', 'BrkSide', 'SWISU', 'Sawyer', 'IDOTRR',
+           'NPkVill', 'MeadowV', 'Blueste', 'BrDale'];
 const DB_SCATTER_LIST = ['PC1', 'PC2', 'GrLivArea', 'SalePrice', 'YearBuilt', 'MDS1', 'MDS2'];
 const DB_DOMAINS = {};
 const DB_CLUSTER_SELECTION = [true, true, true, true];
@@ -21,6 +20,15 @@ var barchartSingleColor = true;
 var allFilter = {};
 
 function resetFilter() {
+  // var color = d3.scaleLinear()
+  //   .domain([0, DB_NEIGHBORHOOD_COLORS.length])
+  //   .range(["#065d87", "#8ec2c5"]);
+  //
+  // for (var i = 0; i < DB_NEIGHBORHOOD_COLORS.length; i++) {
+  //   DB_NEIGHBORHOOD_COLORS[i] = color(i);
+  // }
+  //
+
   for (var i = 1; i <= 4; i++) {
     DB_CLUSTER_SELECTION[i - 1] = true;
     document.getElementById('clusterSelection' + i).checked = true;
@@ -115,4 +123,15 @@ function db_barchartSingleColorChanges(value) {
   barchartSingleColor = value
   db_barchart1();
   db_barchart2(document.getElementById('overallQualOrOverallCond_c').checked);
+}
+
+function invertNeighborhood() {
+  var tempSet = new Set();
+  for (var i = 0; i < DB_NEIGHBORHOOD_LIST.length; i++) {
+    if (!allFilter['Neighborhood'].has(DB_NEIGHBORHOOD_LIST[i])){
+      tempSet.add(DB_NEIGHBORHOOD_LIST[i]);
+    }
+  }
+  allFilter['Neighborhood'] = tempSet;
+  applyFilter();
 }

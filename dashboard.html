@@ -156,10 +156,18 @@
     <!-- Reset -->
     <div style="margin: 1em 0;">
       <table style="width: 100%; margin: 0; padding: 0; border-collapse: collapse;">
-        <col width=33.33%/>
-        <col width=33.34%/>
-        <col width=33.33%/>
+        <col width=25%/>
+        <col width=25%/>
+        <col width=25%/>
+        <col width=25%/>
         <tr>
+          <td style="margin: 0; padding: 0;">
+            <div class="db_resetFilter_Small"
+                  style="margin-right: 1%;"
+                  onclick="invertNeighborhood();">
+              Invert Neighborhood
+            </div>
+          </td>
           <td style="margin: 0; padding: 0;">
             <div class="db_resetFilter_Small"
                   style="margin-right: 1%;"
@@ -218,6 +226,7 @@
 
   window.onresize = function(event) {
       waitForFinalEvent(function(){
+        resetScatter();
         db_barchart1();
         db_barchart2(document.getElementById('overallQualOrOverallCond_c').checked);
         db_scatter1();
