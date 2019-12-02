@@ -117,9 +117,9 @@ function db_scatter(width, height, margin, id, filename, xLabel, yLabel, attribu
                 }
               }
             } else if (clusterFilter === 'OverallQual') {
-              return DB_NEIGHBORHOOD_COLORS[d[clusterFilter] - 1];
+              return DB_GRADIENT_COLORS[d[clusterFilter] - 1];
             } else if (clusterFilter === 'OverallCond') {
-              return DB_NEIGHBORHOOD_COLORS[d[clusterFilter] - 1];
+              return DB_GRADIENT_COLORS[d[clusterFilter] - 1];
             }
             return DB_CLUSTER_COLORS[d[clusterFilter]];
           } );

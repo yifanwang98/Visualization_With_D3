@@ -158,11 +158,11 @@ function db_barchart(width, height, margin, id, filename, xLabel, yLabel, xAttr,
               }
             } else if (xLabel === 'OverallQual') {
               if (clusterFilter === 'OverallQual') {
-                return DB_NEIGHBORHOOD_COLORS[d.x - 1];
+                return DB_GRADIENT_COLORS[d.x - 1];
               }
             } else if (xLabel === 'OverallCond') {
               if (clusterFilter === 'OverallCond') {
-                return DB_NEIGHBORHOOD_COLORS[d.x - 1];
+                return DB_GRADIENT_COLORS[d.x - 1];
               }
             }
             return DB_COLOR;

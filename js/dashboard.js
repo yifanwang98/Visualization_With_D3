@@ -5,6 +5,7 @@ const DB_NEIGHBORHOOD_COLORS = ['#82d3ad', '#83b0a6', '#374749', '#3d9674', '#18
                                 '#fa7268', '#eb5757', '#e61e50', '#c90000', '#e53974',
                                 '#3999a1', '#4fc5e7', '#aafff9', '#4f8fbf', '#073749',
                                 '#004c97', '#ff9e15', '#e61e50', '#4cb04f', '#00bcd4'];
+var DB_GRADIENT_COLORS = [];
 const DB_NEIGHBORHOOD_LIST = ['NoRidge', 'NridgHt', 'StoneBr', 'OldTown', 'Veenker', 'Crawfor', 'Timber',
            'Gilbert', 'NAmes', 'Somerst', 'ClearCr', 'Edwards', 'SawyerW', 'CollgCr',
            'NWAmes', 'Mitchel', 'Blmngtn', 'BrkSide', 'SWISU', 'Sawyer', 'IDOTRR',

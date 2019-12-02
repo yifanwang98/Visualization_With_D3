@@ -216,6 +216,14 @@
     document.getElementById('l_clusterSelection' + i).style.color = DB_CLUSTER_COLORS[i - 1];
     document.getElementById('l_clusterSelection' + i).style.backgroundColor = DB_CLUSTER_COLORS[i - 1];
   }
+  var tempppp = [];
+  var color = d3.scaleLinear()
+    .domain([-2, 2, 6, 10])
+    .range(["#fff", "#11b5e5", "#0e4377", "#051a2f"]);
+  for (var i = 0; i < 10; i++) {
+    tempppp.push(color(i));
+  }
+  DB_GRADIENT_COLORS = tempppp;
   // Histogram
   db_barchart1();
   db_barchart2();
