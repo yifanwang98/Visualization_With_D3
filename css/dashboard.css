@@ -1,0 +1,85 @@
+
+.db_title {
+  font-size: 1.0em;
+  font-family: "Avenir Next", Helvetica, "Times New Roman";
+}
+
+.db_config {
+  font-size: 1.0em;
+  font-family: "Avenir Next", Helvetica, "Times New Roman";
+}
+
+.db_config_radio {
+  margin: 0 1em;
+}
+
+.db_config_checkboxText {
+  margin: 0 1em;
+  text-decoration: underline;
+  cursor: pointer;
+  font-style: oblique;
+}
+
+.db_resetFilter {
+  background-color: #474f5c;
+  color: white;
+  font-size: 1em;
+  font-family: "Avenir Next", Helvetica, "Times New Roman";
+  border-radius: 5px;
+  text-align: center;
+  margin: 0.75em 0;
+  cursor: pointer;
+  padding: 0.7em 0;
+}
+
+.db_resetFilter:hover {
+  background-color: #31363f;
+}
+
+.db_resetFilter_Small {
+  background-color: #ecedee;
+  color: #31363f;
+  font-size: 1em;
+  font-family: "Avenir Next", Helvetica, "Times New Roman";
+  border-radius: 5px;
+  text-align: center;
+  cursor: pointer;
+  padding: 0.7em 0;
+}
+
+.db_resetFilter_Small:hover {
+  background-color: #dadbde;
+}
+
+.db_configSection {
+  padding: 1em 5% 2em 5%;
+}
+
+body {
+  background-image: url('so-white.png');
+  min-width: 1100px;
+}
+
+.db_pcaBiplotAxis line, .db_pcaBiplotAxis path {
+  stroke: #b7293e;
+}
+
+.db_pcaBiplotAxis text {
+  fill: #b7293e;
+  font-size: 1em;
+}
+
+
+.db_previouly_on, .db_previouly_on:link, .db_previouly_on:visited {
+  color: #474f5c;
+  font-size: 1.2em;
+  text-decoration: none;
+  font-family: "Avenir Next", Helvetica, "Times New Roman";
+  font-weight: 500;
+  padding: 1em 5%;
+}
+
+.db_previouly_on:hover {
+  color: #000;
+  font-style: italic;
+}

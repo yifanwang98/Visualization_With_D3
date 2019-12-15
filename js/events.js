@@ -5,6 +5,8 @@ window.onresize = function(event) {
       plotHeatmap();
       scatterMatrix();
       parallelCoordinates();
+      db_barchart();
+      db_scatter();
       //...
     }, 500, "some unique string");
 

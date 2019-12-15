@@ -1,0 +1,248 @@
+<!-- Author : Yifan Wang yifanwang@cs.stonybrook.edu -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Visualization Project</title>
+  <!-- Load Script -->
+  <script src="lib/d3.v4.min.js"></script>
+  <script src="js/events.js"></script>
+  <script src="js/dashboard_scatter.js"></script>
+  <script src="js/dashboard_barchart.js"></script>
+  <script src="js/dashboard.js"></script>
+  <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+  <!-- Stylesheet -->
+  <link href="css/index.css" type="text/css" rel="stylesheet">
+  <link href="css/barchart.css" type="text/css" rel="stylesheet">
+  <link href="css/scatter.css" type="text/css" rel="stylesheet">
+  <link href="css/heatmap.css" type="text/css" rel="stylesheet">
+  <link href="css/scatterMatrix.css" type="text/css" rel="stylesheet">
+  <link href="css/dashboard.css" type="text/css" rel="stylesheet">
+  <link href="css/dropdown_menu.css" type="text/css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+	<div style="padding: 1.5em 10%; text-align: center;">
+    <div class="title1">CSE 332 Project Dashboard</div>
+  </div>
+
+  <!--######################################################################-->
+  <!--######################################################################-->
+  <!--######################################################################-->
+
+  <!-- Bar Chart Section -->
+  <div style="text-align: center">
+    <span id="barchart"></span>
+    <span id="barchart2"></span>
+  </div><!-- End of Bar Chart Section -->
+
+  <!--**********************************************************************-->
+  <!--**********************************************************************-->
+  <!--**********************************************************************-->
+  <!-- Scatter Plot Section -->
+  <div style="text-align: center; padding: 1.5em 0;">
+    <span id="scatterPlot1"></span>
+    <span id="scatterPlot2"></span>
+    <span id="scatterPlot3"></span>
+  </div>
+
+  <!--**********************************************************************-->
+  <!--**********************************************************************-->
+  <!--**********************************************************************-->
+
+  <div class="db_configSection">
+    <div style="padding: 1.5em 10%; text-align: center;">
+      <div class="title2">Configurations</div>
+    </div>
+
+
+    <div class="db_config">
+      <span style="font-weight: 500;">Color Distinction:</span>
+      <span class="db_config_radio">
+        <input type="radio" id="clusterFilter3" name="clusterFilter"
+                value="Agglomerative" checked onchange="db_clusterFilterChanges()">
+        <label for="Agglomerative">Agglomerative</label>
+      </span>
+      <span class="db_config_radio">
+        <input type="radio" id="clusterFilter2" name="clusterFilter"
+                value="KMeans" onchange="db_clusterFilterChanges()">
+        <label for="KMeans">KMeans</label>
+      </span>
+      <span class="db_config_radio">
+        <input type="radio" id="clusterFilter4" name="clusterFilter"
+                value="Neighborhood" onchange="db_clusterFilterChanges()">
+        <label for="Neighborhood">Neighborhood</label>
+      </span>
+      <span class="db_config_radio">
+        <input type="radio" id="clusterFilter1" name="clusterFilter"
+                value="None" onchange="db_clusterFilterChanges()">
+        <label for="None">None</label>
+      </span>
+      <span class="db_config_radio">
+        <input type="radio" id="clusterFilter6" name="clusterFilter"
+                value="OverallCond" onchange="db_clusterFilterChanges()">
+        <label for="OverallCond">OverallCond</label>
+      </span>
+      <span class="db_config_radio">
+        <input type="radio" id="clusterFilter5" name="clusterFilter"
+                value="OverallQual" onchange="db_clusterFilterChanges()">
+        <label for="OverallQual">OverallQual</label>
+      </span>
+    </div>
+
+    <!-- Cluster Selection -->
+    <div id="clusterSelectionSection" class="db_config" style="margin: 1em 0 ;">
+      <span style="font-weight: 500;">Cluster:</span>
+      <span class="db_config_radio">
+        <input type="checkbox" id="clusterSelection1" name="clusterSelection"
+                value="c1" checked onchange="db_clusterSelectionChanges()">
+        <div style="display: inline-block; width: 0.15em;" id='l_clusterSelection1'>&nbsp;</div>
+        <label for="c1">Cluster 1</label>
+      </span>
+      <span class="db_config_radio">
+        <input type="checkbox" id="clusterSelection2" name="clusterSelection"
+                value="c2" checked onchange="db_clusterSelectionChanges()">
+        <div style="display: inline-block; width: 0.15em;" id='l_clusterSelection2'>&nbsp;</div>
+        <label for="c2">Cluster 2</label>
+      </span>
+      <span class="db_config_radio">
+        <input type="checkbox" id="clusterSelection3" name="clusterSelection"
+                value="c3" checked onchange="db_clusterSelectionChanges()">
+        <div style="display: inline-block; width: 0.15em;" id='l_clusterSelection3'>&nbsp;</div>
+        <label for="c3">Cluster 3</label>
+      </span>
+      <span class="db_config_radio">
+        <input type="checkbox" id="clusterSelection4" name="clusterSelection"
+                value="c4" checked onchange="db_clusterSelectionChanges()">
+        <div style="display: inline-block; width: 0.15em;" id='l_clusterSelection4'>&nbsp;</div>
+        <label for="c4">Cluster 4</label>
+      </span>
+      <span class="db_config_checkboxText" onclick="db_clusterSelectionChangesAll(true)">
+        Select All</span>
+      <span class="db_config_checkboxText" onclick="db_clusterSelectionChangesAll(false)">
+        Select None</span>
+    </div>
+
+
+    <div class="db_config" style="margin: 1em 0 ;">
+      <span style="font-weight: 500;">OverallQual or OverallCond:</span>
+      <span class="db_config_radio">
+        <input type="radio" id="overallQualOrOverallCond_q" name="overallQualOrOverallCond"
+                value="OverallQual" checked onchange="db_barchart2(false);">
+        <label for="OverallQual">OverallQual</label>
+      </span>
+      <span class="db_config_radio">
+        <input type="radio" id="overallQualOrOverallCond_c" name="overallQualOrOverallCond"
+                value="OverallCond" onchange="db_barchart2(true);">
+        <label for="OverallCond">OverallCond</label>
+      </span>
+    </div>
+
+
+    <div class="db_config" style="margin: 1em 0 ;">
+      <span style="font-weight: 500;">PCA or MDS:</span>
+      <span class="db_config_radio">
+        <input type="radio" id="pcaOrMDS_pca" name="pcaOrMDS"
+                value="pca" checked onchange="db_scatter3(false);">
+        <label for="pca">PCA</label>
+      </span>
+      <span class="db_config_radio">
+        <input type="radio" id="pcaOrMDS_mds" name="pcaOrMDS"
+                value="mds" onchange="db_scatter3(true);">
+        <label for="mds">MDS</label>
+      </span>
+    </div>
+
+    <!-- Reset -->
+    <div style="margin: 1em 0;">
+      <table style="width: 100%; margin: 0; padding: 0; border-collapse: collapse;">
+        <col width=25%/>
+        <col width=25%/>
+        <col width=25%/>
+        <col width=25%/>
+        <tr>
+          <td style="margin: 0; padding: 0;">
+            <div class="db_resetFilter_Small"
+                  style="margin-right: 1%;"
+                  onclick="invertNeighborhood();">
+              Invert Neighborhood
+            </div>
+          </td>
+          <td style="margin: 0; padding: 0;">
+            <div class="db_resetFilter_Small"
+                  style="margin-right: 1%;"
+                  onclick="resetNeighborhood(); applyFilter();">
+              Reset Neighborhood
+            </div>
+          </td>
+          <td style="margin: 0; padding: 0;">
+            <div class="db_resetFilter_Small"
+                  style="margin-left: 1%;"
+                  onclick="resetOverallCond(); applyFilter();">
+              Reset OverallCond
+            </div>
+          </td>
+          <td style="margin: 0; padding: 0;">
+            <div class="db_resetFilter_Small"
+                  style="margin-left: 1%;"
+                  onclick="resetOverallQual(); applyFilter();">
+              Reset OverallQual
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div>
+    <div class="db_resetFilter" onclick="resetFilter()">
+      Reset All
+    </div>
+  </div>
+
+  <div>
+    <a href="index.html" class="db_previouly_on"><i class="fas fa-chevron-left"></i> Previouly on this dataset</a>
+  </div>
+  <!--######################################################################-->
+  <!--######################################################################-->
+  <!--######################################################################-->
+  <button onclick="topFunction()" id="toTopBTN"></button>
+</body>
+</html>
+
+<script>
+  resetNeighborhood();
+  resetOverallQual();
+  resetOverallCond();
+  resetScatter();
+  for (var i = 1; i <= 4; i++) {
+    document.getElementById('l_clusterSelection' + i).style.color = DB_CLUSTER_COLORS[i - 1];
+    document.getElementById('l_clusterSelection' + i).style.backgroundColor = DB_CLUSTER_COLORS[i - 1];
+  }
+  var tempppp = [];
+  var color = d3.scaleLinear()
+    .domain([-2, 2, 6, 10])
+    .range(["#fff", "#11b5e5", "#0e4377", "#051a2f"]);
+  for (var i = 0; i < 10; i++) {
+    tempppp.push(color(i));
+  }
+  DB_GRADIENT_COLORS = tempppp;
+  // Histogram
+  db_barchart1();
+  db_barchart2();
+  // Scatter
+  db_scatter1();
+  db_scatter2();
+  db_scatter3();
+
+  window.onresize = function(event) {
+      waitForFinalEvent(function(){
+        resetScatter();
+        db_barchart1();
+        db_barchart2(document.getElementById('overallQualOrOverallCond_c').checked);
+        db_scatter1();
+        db_scatter2();
+        db_scatter3(document.getElementById('pcaOrMDS_mds').checked);
+        //...
+      }, 500, "some unique string");
+
+  };
+
+</script>
