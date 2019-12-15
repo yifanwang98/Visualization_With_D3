@@ -1,4 +1,4 @@
-# CSE332 Project
+# Data Visualization Project with D3.js
 
 Dataset URL: https://www.kaggle.com/c/house-prices-advanced-regression-techniques/data 
  
